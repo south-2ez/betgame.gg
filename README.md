@@ -1,2 +1,2 @@
-# hermes
-Project Hermes
+#Betgame.gg
+Project Betgame.gg
