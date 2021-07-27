@@ -1,0 +1,166 @@
+<?php
+
+use Illuminate\Support\Facades\Schema;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Database\Migrations\Migration;
+
+class ChangeProvincesDataAndAddCityData extends Migration
+{
+    /**
+     * Run the migrations.
+     *
+     * @return void
+     */
+    public function up()
+    {
+        DB::table('provinces')->truncate();
+        DB::table('provinces')->insert([
+            ['province' => 'Abra'],
+            ['province' => 'Agusan del Norte'],
+            ['province' => 'Agusan del Sur'],
+            ['province' => 'Aklan'],
+            ['province' => 'Albay'],
+            ['province' => 'Antique'],
+            ['province' => 'Apayao'],
+            ['province' => 'Aurora'],
+            ['province' => 'Basilan'],
+            ['province' => 'Bataan'],
+            ['province' => 'Batanes'],
+            ['province' => 'Batangas'],
+            ['province' => 'Benguet'],
+            ['province' => 'Biliran'],
+            ['province' => 'Bohol'],
+            ['province' => 'Bukidnon'],
+            ['province' => 'Bulacan'],
+            ['province' => 'Cagayan'],
+            ['province' => 'Camarines Norte'],
+            ['province' => 'Camarines Sur'],
+            ['province' => 'Camiguin'],
+            ['province' => 'Capiz'],
+            ['province' => 'Catanduanes'],
+            ['province' => 'Cavite'],
+            ['province' => 'Cebu'],
+            ['province' => 'Compostela Valley'],
+            ['province' => 'Cotabato'],
+            ['province' => 'Davao del Norte'],
+            ['province' => 'Davao del Sur'],
+            ['province' => 'Davao Oriental'],
+            ['province' => 'Eastern Samar'],
+            ['province' => 'Guimaras'],
+            ['province' => 'Ifugao'],
+            ['province' => 'Ilocos Norte'],
+            ['province' => 'Ilocos Sur'],
+            ['province' => 'Iloilo'],
+            ['province' => 'Isabela'],
+            ['province' => 'Kalinga'],
+            ['province' => 'La Union'],
+            ['province' => 'Laguna'],
+            ['province' => 'Lanao del Norte'],
+            ['province' => 'Lanao del Sur'],
+            ['province' => 'Leyte'],
+            ['province' => 'Maguindanao'],
+            ['province' => 'Marinduque'],
+            ['province' => 'Masbate'],
+            ['province' => 'Metro Manila'],
+            ['province' => 'Misamis Occidental'],
+            ['province' => 'Misamis Oriental'],
+            ['province' => 'Mountain Province'],
+            ['province' => 'Negros Occidental'],
+            ['province' => 'Negros Oriental'],
+            ['province' => 'Northern Samar'],
+            ['province' => 'Nueva Ecija'],
+            ['province' => 'Nueva Vizcaya'],
+            ['province' => 'Occidental Mindoro'],
+            ['province' => 'Oriental Mindoro'],
+            ['province' => 'Palawan'],
+            ['province' => 'Pampanga'],
+            ['province' => 'Pangasinan'],
+            ['province' => 'Quezon'],
+            ['province' => 'Quirino'],
+            ['province' => 'Rizal'],
+            ['province' => 'Romblon'],
+            ['province' => 'Samar'],
+            ['province' => 'Sarangani'],
+            ['province' => 'Siquijor'],
+            ['province' => 'Sorsogon'],
+            ['province' => 'South Cotabato'],
+            ['province' => 'Southern Leyte'],
+            ['province' => 'Sultan Kudarat'],
+            ['province' => 'Sulu'],
+            ['province' => 'Surigao del Norte'],
+            ['province' => 'Surigao del Sur'],
+            ['province' => 'Tarlac'],
+            ['province' => 'Tawi-Tawi'],
+            ['province' => 'Zambales'],
+            ['province' => 'Zamboanga del Norte'],
+            ['province' => 'Zamboanga del Sur'],
+            ['province' => 'Zamboanga Sibugay'],
+        ]);
+    }
+
+    /**
+     * Reverse the migrations.
+     *
+     * @return void
+     */
+    public function down()
+    {
+        DB::table('provinces')->truncate();
+        DB::table('provinces')->insert([
+            ['province' => 'Alcantara'],
+            ['province' => 'Alcoy'],
+            ['province' => 'Alegria'],
+            ['province' => 'Aloguinsan'],
+            ['province' => 'Argao'],
+            ['province' => 'Asturias'],
+            ['province' => 'Badian'],
+            ['province' => 'Balamban'],
+            ['province' => 'Bantayan'],
+            ['province' => 'Barili'],
+            ['province' => 'Basak'],
+            ['province' => 'Bogo'],
+            ['province' => 'Boljoon'],
+            ['province' => 'Borbon'],
+            ['province' => 'Bulacao'],
+            ['province' => 'Carcar'],
+            ['province' => 'Carmen'],
+            ['province' => 'Catmon'],
+            ['province' => 'Cebu City'],
+            ['province' => 'Compostela'],
+            ['province' => 'Consolacion'],
+            ['province' => 'Cordova'],
+            ['province' => 'Daanbantayan'],
+            ['province' => 'Dalaguete'],
+            ['province' => 'Danao'],
+            ['province' => 'Dumanjug'],
+            ['province' => 'Ginatilan'],
+            ['province' => 'Lapu-Lapu'],
+            ['province' => 'Liloan'],
+            ['province' => 'Madridejos'],
+            ['province' => 'Malabuyoc'],
+            ['province' => 'Mandaue'],
+            ['province' => 'Medellin'],
+            ['province' => 'Minglanilla'],
+            ['province' => 'Moalboal'],
+            ['province' => 'Naga'],
+            ['province' => 'Oslob'],
+            ['province' => 'Pilar'],
+            ['province' => 'Pinamungajan'],
+            ['province' => 'Poro'],
+            ['province' => 'Ronda'],
+            ['province' => 'Samboan'],
+            ['province' => 'San Fernando'],
+            ['province' => 'San Francisco'],
+            ['province' => 'San Remegio'],
+            ['province' => 'Santa Fe'],
+            ['province' => 'Santander'],
+            ['province' => 'Sogod'],
+            ['province' => 'Tabogon'],
+            ['province' => 'Tabuelan'],
+            ['province' => 'Tabunok'],
+            ['province' => 'Talisay'],
+            ['province' => 'Tuburan'],
+            ['province' => 'Tudela'],
+        ]);
+    }
+}

@@ -1,0 +1,336 @@
+.com-submenu {
+    margin: 1em 16px 0px 18px;
+}
+
+.dd-coins::after {
+    content: "";
+    width: 0;
+    height: 0;
+    border-left: 7px solid transparent;
+    border-right: 7px solid transparent;
+    border-top: 6px solid #8EC13E;
+    margin: 2px 0 2px 4px;
+    display: inline-block;
+}
+
+#dropdown-coins { width: 132px !important; }
+
+.dropdown-content-notifications {
+    position: absolute;
+    width: 100%;
+    background: #373737;
+}
+
+.dropdown-content-notifications li:first-child::before {
+    width: 0;
+    height: 0;
+    border-left: 8px solid transparent;
+    border-right: 8px solid transparent;
+    border-bottom: 8px solid #373737;
+    position: absolute;
+    top: -8px;
+    left: 52px;
+    content: "";
+}
+
+.dropdown-content-notifications li:first-child:hover::before {
+    border-bottom: 8px solid #8EC13E;
+}
+
+.dropdown-content-notifications li {
+    color: #888;
+    padding: 1em;
+    border-bottom: 1px solid #252525;
+    display: block;
+}
+
+.dropdown-content-notifications li:hover {
+    background-color: #8EC13E;
+}
+
+.dropdown-content-notifications li:hover a {
+    color: #fff !important;
+}
+
+.notification-markasread {
+    position: absolute;
+    width: 8px;
+    height: 8px;
+    margin: 2px;
+    background-color: #8EC13E;
+    border-radius: 6px;
+    box-sizing: initial;
+    right: 6px;
+}
+
+.dropdown-content-notifications li:hover .notification-markasread:hover {
+    margin: 0;
+    background-color: #8EC13E;
+    border: 2px solid #fff;
+}
+
+.dropdown-content-notifications li:hover .notification-markasread {
+    background-color: #fff;
+}
+
+#status-coins {
+    color: #8EC13E;
+    vertical-align: middle;
+    font-size: 0.8em;
+    text-align: right;
+    line-height: 1.4em;
+    cursor: pointer;
+}
+
+#place-coins {
+    font-weight: bold;
+    font-size: 1.2em;
+    padding: 0 3em;
+}
+
+#page-notifications .notification-delete {
+    float: right;
+    text-align: center;
+    font-size: 2em;
+    bottom: 0.3em;
+    right: -0.5em;
+    color: #fff;
+}
+
+.match-box {
+    color: #bbb;
+    float: left;
+    width: 100%;
+    background: #252525;
+    border-radius: 2px;
+    overflow: hidden;
+}
+
+.match-trapezoid {
+    position: relative;
+    height: 0;
+    z-index: 0
+}
+
+.match-trapezoid-wrapper {
+    background-color: #333;
+    width: 100%;
+    height: 192px;
+    text-align: center;
+}
+
+.match-trapezoid-vs {
+    width: 50px;
+    line-height: 50px;
+    font-size: 24px;
+    border-radius: 25px;
+    background: #8EC13E;
+    color: #fff;
+    margin: 71px auto;
+    display: inline-block;
+    z-index: 2;
+    position: relative;
+}
+
+.match-trapezoid-left, .match-trapezoid-right {
+    width: 80%;
+    display: inline-block;
+    position: absolute;
+    height: 192px;
+    top: 0;
+    cursor: pointer;
+    -webkit-transform: skew(-30deg);
+    -moz-transform: skew(-30deg);
+    -o-transform: skew(-30deg);
+}
+
+.match-trapezoid-winner-left, .match-trapezoid-winner-right,
+.match-trapezoid-winner-left-chosen, .match-trapezoid-winner-right-chosen {
+    z-index: 4;
+    width: 90px;
+    display: inline-block;
+    position: absolute;
+    height: 28px;
+    top: 8px;
+    padding: 8px;
+    letter-spacing: 0.04em;
+    font-size: 12px;
+    font-weight: bold;
+    color: #333333;
+    background-color: #8EC13E;
+}
+.match-trapezoid-winner-left, .match-trapezoid-winner-left-chosen { left: 0; top: 156px }
+.match-trapezoid-winner-right, .match-trapezoid-winner-right-chosen { right: 0 }
+.match-trapezoid-winner-left-chosen, .match-trapezoid-winner-right-chosen { background-color: #333; color: #8EC13E }
+.match-trapezoid-winner-left:after, .match-trapezoid-winner-right:after,
+.match-trapezoid-winner-left:before, .match-trapezoid-winner-right:before,
+.match-trapezoid-winner-left-chosen:after, .match-trapezoid-winner-right-chosen:after,
+.match-trapezoid-winner-left-chosen:before, .match-trapezoid-winner-right-chosen:before {
+    z-index: 3;
+    position: absolute;
+    display: block;
+    background-color: #8EC13E;
+    width: 28px;
+    height: 28px;
+    top: 0;
+    content: "";
+    -webkit-transform: skew(-30deg);
+    -moz-transform: skew(-30deg);
+    -o-transform: skew(-30deg);
+}
+.match-trapezoid-winner-left:before, .match-trapezoid-winner-right:before { left: -14px }
+.match-trapezoid-winner-left:after, .match-trapezoid-winner-right:after { right: -14px }
+.match-trapezoid-winner-left-chosen:before, .match-trapezoid-winner-right-chosen:before { left: -14px; background-color: #333 }
+.match-trapezoid-winner-left-chosen:after, .match-trapezoid-winner-right-chosen:after { right: -14px; background-color: #333 }
+
+.match-trapezoid-left { left: 0; margin-left: -30%; }
+.match-trapezoid-right { right: 0; margin-right: -30%; }
+
+.chosen {
+    background-color: #8EC13E;
+}
+
+.chosen.team-a .match-team,
+.chosen.team-a .match-team .match-team-name,
+.chosen.team-b .match-team,
+.chosen.team-b .match-team .match-team-name {
+    color: #252525;
+}
+
+.match-team { font-weight: bold }
+
+.match-team-name {
+    color: #558b2f;letter-spacing: 0.4px;font-size: 1.4em;
+}
+
+#match-coins-details input::-webkit-outer-spin-button, #match-coins-details input::-webkit-inner-spin-button
+{-webkit-appearance: none; margin: 0; }
+
+.team-a, .team-b {
+    cursor: pointer;
+    background: none;
+    position: relative;
+    padding: 0;
+    margin: 23px 0;
+}
+.team-a { text-align: left; }
+.team-b { text-align: right; }
+
+.team-a > div, .team-b > div {
+    vertical-align: middle;
+    display: inline-block;
+    line-height: 1.3em;
+}
+
+.team-a .match-team-percent, .team-b .match-team-percent {
+    color: #fff;
+    display: block;
+    position: absolute;
+}
+.team-a .match-team-percent {
+    bottom: -2em;
+}
+.team-b .match-team-percent {
+    top: -2em;
+    right: 0;
+}
+
+.match-team-wrapper {
+    overflow: hidden;
+    margin-top: 20px;
+}
+
+.table-lng a.username {
+    max-width: 120px;
+    overflow: hidden;
+    display: inline-block;
+    text-overflow: ellipsis;
+}
+
+table.table-lng { font-size: 0.8em; }
+.table-lng thead { background-color: #252525;color: #bbb }
+.table-lng thead th  { border-radius: 0 }
+.table-lng tbody { background-color: #bbb;font-weight: bold }
+#history-load-more { cursor: pointer }
+
+.bet-lost { color: #ff0000; }
+.bet-won { color: #569c00; }
+.bet-cancel { color: #666; }
+
+#mystats .tabs, #myprofile-right .tabs { box-shadow: 0 -1px #888 inset; }
+#mystats .tabs, #mystats .tabs .tab, #myprofile-right .tabs, #myprofile-right .tabs .tab {
+    background-color: transparent;
+}
+#mystats .tabs .tab a, #myprofile-right .tabs .tab a {
+    color: #888;
+    font-weight: bold;
+    font-size: 0.8em;
+    letter-spacing: 0;
+}
+#mystats .tabs .tab a.active, #myprofile-right .tabs .tab a.active {
+    color: #252525;
+}
+
+#page-notifications li .collapsible-header { background-color: #bbb; border: none }
+#page-notifications > li:nth-child(odd) .collapsible-header { background-color: #ccc; }
+#page-notifications { border: none }
+#page-notifications li.active .collapsible-header, #page-notifications li.notification-new .collapsible-header
+{ background-color: #252525; color: #eee; }
+#page-notifications .collapsible-body { background-color: #333; color: #bbb; border: none; text-align: justify }
+#page-notifications svg { width: 18px;height: 18px;vertical-align: sub; }
+.active .collapsible-body p a { color: #8EC13E }
+
+.new {
+    vertical-align: super;
+    font-size: 0.75em;
+    font-weight: bold;
+    color: #558b2f;
+}
+
+#notifications-count {
+    position: absolute;
+    margin: -30px 0 0 22px;
+    display: block;
+    width: 16px;
+    line-height: 16px;
+    background-color: #558b2f;
+    border-radius: 10px;
+    font-size: 10px;
+    font-weight: bold;
+    text-align: center;
+    color: #fff;
+    box-shadow: 1px 2px 5px #111;
+}
+
+#mainstream {
+    float: left;
+    width: 100%;
+}
+
+@media only screen and (min-width: 601px) {
+    .team-a {
+        padding: 0.75em 0.75em 0.75em 0;
+        margin: 23px 23px 23px 0;
+        text-align: right;
+    }
+    .team-b {
+        padding: 0.75em 0 0.75em 0.75em;
+        margin: 23px 0 23px 23px;
+        text-align: left;
+    }
+    .match-team-wrapper {
+        height: 120px;
+        margin-top: 0px;
+    }
+    .team-a .match-team-percent, .team-b .match-team-percent {
+        display: inline-block;
+        position: inherit;
+        bottom: initial;
+        top: initial;
+        right: initial;
+    }
+
+    .match-trapezoid-wrapper, .match-trapezoid-left, .match-trapezoid-right { height: 120px; }
+    .match-trapezoid-vs { margin: 35px auto; }
+    .match-trapezoid-winner-left, .match-trapezoid-winner-left-chosen { top: 8px }
+}
