@@ -25,10 +25,11 @@
     <!-- Styles -->
     <link rel="stylesheet" href="{{ asset('css/bootstrap.min.css') }}" type="text/css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" type="text/css">
-    <link rel="stylesheet" href="{{ mix('css/all-styles.css') }}" type="text/css">   
+    <link rel="stylesheet" href="{{ mix('css/all-styles.css') }}" type="text/css">
     <link rel="stylesheet" href="{{ asset('css/responsive.css') }}?id=0a4cecac713e0ecec97d" type="text/css">
     <link rel="stylesheet" href="{{ asset('css/buttons.css') }}?id=0a4cecac713e0ecec97d" type="text/css">
     <link rel="stylesheet" href="{{ asset('css/nprogress.css') }}?id=0a4cecac713e0ecec97d" type="text/css">
+    <link rel="stylesheet" href="{{ asset('css/custom.css') }}" type="text/css">
     <style>
         /*!
  * Waves v0.6.0
@@ -305,50 +306,104 @@
     <div id="app">
     <div class="header" id="webtop">
         <div id="mt"><div onclick="goTo(0)">up <i class="fa fa-arrow-up"></i></div><div onclick="goTo(1)">matches</div></div>
-        <div class='logo'>
-            <a href="/" class="main-logo">
-                <img src="{{ asset('images/2ez_logo.png') }}"/>
-            </a>           
-            {{-- <a href="#"  data-pjax data-toggle="modal" data-target="#trick-or-treat-event-modal" data-pjax  class="main-logo">
-                <img src="{{ asset('images/LogoCNY.png') }}" width="295px;" style="margin-top:10px; margin-left:10px;"/>
-            </a> --}}
-            {{-- <a href="#" data-pjax data-toggle="modal" data-target="#trick-or-treat-event-modal"><img class="halloween-pumpkin-logo" src="{{ asset('images/halloween/pumpkin-logo_100x100.png') }}" /></a> --}}
+        
+
+        <div class="container home-container">
+            <div class="row">
+
+                <div class="col-md-3">
+                    <div class='logo'>
+                        <a href="/" class="main-logo">
+                            <img src="{{ asset('images/betgame-icon.png') }}"/>
+                            <img src="{{ asset('images/betgame-word.png') }}"/>
+                        </a>
+                        <!--
+                        <a href="/" class="main-logo">
+                            <img src="{{ asset('images/2ez_logo.png') }}"/>
+                        </a>
+                        {{-- <a href="#"  data-pjax data-toggle="modal" data-target="#trick-or-treat-event-modal" data-pjax  class="main-logo">
+                            <img src="{{ asset('images/LogoCNY.png') }}" width="295px;" style="margin-top:10px; margin-left:10px;"/>
+                        </a> --}}
+                        {{-- <a href="#" data-pjax data-toggle="modal" data-target="#trick-or-treat-event-modal"><img class="halloween-pumpkin-logo" src="{{ asset('images/halloween/pumpkin-logo_100x100.png') }}" /></a> --}}
+                        -->
+                    </div>
+                </div>
+                <div class="col-md-9">
+
+                    <!--
+                    <div class="menu pull-left">
+                        <ul style="list-style: none">
+                            <li><a href="{{ url('home') }}" data-pjax><i class="fa fa-trophy" aria-hidden="true"></i> <span>Matches</span></a></li>
+                            <li><a href="{{ url('/profile') }}"><i class="fa fa-user" aria-hidden="true"></i><span> My Profile</span></a></li>
+                            <li><a href="{{ url('/market') }}"><i class="fa fa-tag" aria-hidden="true"></i><span> Market</span></a></li>
+                            {{-- <li><a href="{{ url('careers') }}" data-pjax><i class="fa fa-at" aria-hidden="true"></i> <span>Careers</span></a></li> --}}
+                            @if (!Auth::guest() && Auth::user()->isAdmin())
+                            <li><a href="{{ url('/matchmanager') }}"><i class="fa fa-bolt" aria-hidden="true"></i><span> Match Manager</span></a></li>
+                            <li><a href="{{ url('/admin') }}"><i class="fa fa-cogs" aria-hidden="true"></i><span> Admin</span></a></li>
+                            @else
+                                @if (!Auth::guest() && Auth::user()->isMatchManager())
+                                <li><a href="{{ url('/matchmanager') }}"><i class="fa fa-bolt" aria-hidden="true"></i><span> Match Manager</span></a></li>
+                                @endif
+                            @endif
+                            @if (!Auth::guest() && hasPartnerDashboardAccess( Auth::user()) )
+                                <li><a href="{{ url('/agent') }}"><i class="fa fa-tachometer" aria-hidden="true"></i><span> Partner Dashboard</span></a></li>
+                            @endif
+                            <li><a href="#" onclick="toggleChatBubble()"><i class="fa fa-commenting-o" aria-hidden="true"></i> <span>Chat with Us</span></a></li>
+                        </ul>
+                    </div>
+                        -->
+                    
+                    <div class="menu pull-left">
+                    <ul class="nav nav-pills">
+  <li class="nav-item">
+    <a class="nav-link active" href="#">Active</a>
+  </li>
+  <li class="nav-item dropdown">
+    <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Dropdown</a>
+    <div class="dropdown-menu">
+      <a class="dropdown-item" href="#">Action</a>
+      <a class="dropdown-item" href="#">Another action</a>
+      <a class="dropdown-item" href="#">Something else here</a>
+      <div class="dropdown-divider"></div>
+      <a class="dropdown-item" href="#">Separated link</a>
+    </div>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" href="#">Link</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link disabled" href="#">Disabled</a>
+  </li>
+</ul>
+                    </div>
+
+
+                    <div class="login">
+                        @if (Auth::guest())
+                        <a class="waves-effect btn grey darken-3" style="padding: 0 16px;margin: 0.75em 0.2em;letter-spacing: 0;" data-toggle="modal" data-target="#signupm"><span>SignIn</span>/<b>SignUp</b></a>
+                        @else
+                        <span class="user_details">
+                            <span class="user_name">{{ Auth::user()->name }}</span><br/>
+                            <span class="credits_top">EZ Credits: <span data-number>&#8369; {{ number_format(Auth::user()->credits, 2, '.', ',') }}</span></span>
+                        </span>
+                        <image src="{{ Auth::user()->provider == 'local' ? url('/') . '/' . Auth::user()->avatar : Auth::user()->avatar }}" />
+                        <a href="{{ url('/logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();" class="waves-effect btn grey darken-3" style="padding: 0 16px;margin: 0.75em 0.2em;letter-spacing: 0;"><span>Log</span><b>Out</b></a>
+                        <form id="logout-form" action="{{ url('/logout') }}" method="POST" style="display: none;">
+                            {{ csrf_field() }}
+                        </form>
+                        @endif
+                    </div>
+
+
+                
+                </div>
+
+
+            </div>
         </div>
-        <div class="menu">
-            <ul style="list-style: none">
-                <li><a href="{{ url('home') }}" data-pjax><i class="fa fa-trophy" aria-hidden="true"></i> <span>Matches</span></a></li>
-                <li><a href="{{ url('/profile') }}"><i class="fa fa-user" aria-hidden="true"></i><span> My Profile</span></a></li>
-                <li><a href="{{ url('/market') }}"><i class="fa fa-tag" aria-hidden="true"></i><span> Market</span></a></li>
-                {{-- <li><a href="{{ url('careers') }}" data-pjax><i class="fa fa-at" aria-hidden="true"></i> <span>Careers</span></a></li> --}}
-                @if (!Auth::guest() && Auth::user()->isAdmin())
-                <li><a href="{{ url('/matchmanager') }}"><i class="fa fa-bolt" aria-hidden="true"></i><span> Match Manager</span></a></li>
-                <li><a href="{{ url('/admin') }}"><i class="fa fa-cogs" aria-hidden="true"></i><span> Admin</span></a></li>
-                @else
-                    @if (!Auth::guest() && Auth::user()->isMatchManager())
-                    <li><a href="{{ url('/matchmanager') }}"><i class="fa fa-bolt" aria-hidden="true"></i><span> Match Manager</span></a></li>
-                    @endif
-                @endif
-                @if (!Auth::guest() && hasPartnerDashboardAccess( Auth::user()) )
-                    <li><a href="{{ url('/agent') }}"><i class="fa fa-tachometer" aria-hidden="true"></i><span> Partner Dashboard</span></a></li>
-                @endif
-                <li><a href="#" onclick="toggleChatBubble()"><i class="fa fa-commenting-o" aria-hidden="true"></i> <span>Chat with Us</span></a></li>
-            </ul>
-        </div>
-        <div class="login">
-            @if (Auth::guest())
-            <a class="waves-effect btn grey darken-3" style="padding: 0 16px;margin: 0.75em 0.2em;letter-spacing: 0;" data-toggle="modal" data-target="#signupm"><span>SignIn</span>/<b>SignUp</b></a>
-            @else
-            <span class="user_details">
-                <span class="user_name">{{ Auth::user()->name }}</span><br/>
-                <span class="credits_top">EZ Credits: <span data-number>&#8369; {{ number_format(Auth::user()->credits, 2, '.', ',') }}</span></span>
-            </span>
-            <image src="{{ Auth::user()->provider == 'local' ? url('/') . '/' . Auth::user()->avatar : Auth::user()->avatar }}" />
-            <a href="{{ url('/logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();" class="waves-effect btn grey darken-3" style="padding: 0 16px;margin: 0.75em 0.2em;letter-spacing: 0;"><span>Log</span><b>Out</b></a>
-            <form id="logout-form" action="{{ url('/logout') }}" method="POST" style="display: none;">
-                {{ csrf_field() }}
-            </form>
-            @endif
-        </div>
+
+
+
     </div>
     
     <div id="load">

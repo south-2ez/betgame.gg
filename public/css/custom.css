@@ -1,0 +1,27 @@
+#webtop {
+    /* background: linear-gradient(
+        93.33deg
+        , #28DDFF 27.02%, #FEA22D 63.26%);
+            opacity: 0.05; */
+    padding-left: 10%;
+    padding-right: 10%;
+
+    display : flex;
+    align-items : center;
+}
+
+.home-container {
+    padding: 0 !important;
+    margin-left: 0;
+    margin-right: 0;
+    width: 100%;
+}
+
+.btn-shop {
+    color: #FFFFFF;
+    
+}
+
+.btn-shop:hover {
+    text-decoration: none;
+}
