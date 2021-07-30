@@ -353,46 +353,34 @@
                     </div>
                         -->
                     
-                    <div class="menu pull-left">
-                    <ul class="nav nav-pills">
-  <li class="nav-item">
-    <a class="nav-link active" href="#">Active</a>
-  </li>
-  <li class="nav-item dropdown">
-    <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Dropdown</a>
-    <div class="dropdown-menu">
-      <a class="dropdown-item" href="#">Action</a>
-      <a class="dropdown-item" href="#">Another action</a>
-      <a class="dropdown-item" href="#">Something else here</a>
-      <div class="dropdown-divider"></div>
-      <a class="dropdown-item" href="#">Separated link</a>
-    </div>
-  </li>
-  <li class="nav-item">
-    <a class="nav-link" href="#">Link</a>
-  </li>
-  <li class="nav-item">
-    <a class="nav-link disabled" href="#">Disabled</a>
-  </li>
-</ul>
+                    <div class="menu pull-right">
+                        <button type="button" class="btn btn-link">Shop</button>
+                        <button type="button" class="btn btn-link">Support</button>
+                        <div class="btn-group">
+                            
+                            @if (Auth::guest())
+                            <button type="button" class="btn btn-info"  data-toggle="modal" data-target="#signupm"><span><b>SignIn / SignUp</b></span></button>
+                            @else
+                            <span class="user_details">
+                                <span class="user_name">{{ Auth::user()->name }}</span><br/>
+                                <span class="credits_top">EZ Credits: <span data-number>&#8369; {{ number_format(Auth::user()->credits, 2, '.', ',') }}</span></span>
+                            </span>
+                            <image src="{{ Auth::user()->provider == 'local' ? url('/') . '/' . Auth::user()->avatar : Auth::user()->avatar }}" />
+                            <a href="{{ url('/logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();" class="waves-effect btn grey darken-3" style="padding: 0 16px;margin: 0.75em 0.2em;letter-spacing: 0;"><span>Log</span><b>Out</b></a>
+                            <form id="logout-form" action="{{ url('/logout') }}" method="POST" style="display: none;">
+                                {{ csrf_field() }}
+                            </form>
+                            @endif
+               
+
+
+                        </div>
+
+
                     </div>
 
 
-                    <div class="login">
-                        @if (Auth::guest())
-                        <a class="waves-effect btn grey darken-3" style="padding: 0 16px;margin: 0.75em 0.2em;letter-spacing: 0;" data-toggle="modal" data-target="#signupm"><span>SignIn</span>/<b>SignUp</b></a>
-                        @else
-                        <span class="user_details">
-                            <span class="user_name">{{ Auth::user()->name }}</span><br/>
-                            <span class="credits_top">EZ Credits: <span data-number>&#8369; {{ number_format(Auth::user()->credits, 2, '.', ',') }}</span></span>
-                        </span>
-                        <image src="{{ Auth::user()->provider == 'local' ? url('/') . '/' . Auth::user()->avatar : Auth::user()->avatar }}" />
-                        <a href="{{ url('/logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();" class="waves-effect btn grey darken-3" style="padding: 0 16px;margin: 0.75em 0.2em;letter-spacing: 0;"><span>Log</span><b>Out</b></a>
-                        <form id="logout-form" action="{{ url('/logout') }}" method="POST" style="display: none;">
-                            {{ csrf_field() }}
-                        </form>
-                        @endif
-                    </div>
+
 
 
                 
