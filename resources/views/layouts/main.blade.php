@@ -354,12 +354,12 @@
                         -->
                     
                     <div class="menu pull-right">
-                        <button type="button" class="btn btn-link">Shop</button>
-                        <button type="button" class="btn btn-link">Support</button>
+                        <button type="button" class="btn btn-link btn-header">Shop</button>
+                        <button type="button" class="btn btn-link btn-header">Support</button>
                         <div class="btn-group">
                             
                             @if (Auth::guest())
-                            <button type="button" class="btn btn-info"  data-toggle="modal" data-target="#signupm"><span><b>SignIn / SignUp</b></span></button>
+                            <button type="button" class="btn btn-info btn-login"  data-toggle="modal" data-target="#signupm"><span><b>SignIn / SignUp</b></span></button>
                             @else
                             <span class="user_details">
                                 <span class="user_name">{{ Auth::user()->name }}</span><br/>
@@ -372,39 +372,30 @@
                             </form>
                             @endif
                
-
-
                         </div>
 
-
                     </div>
-
-
-
-
-
                 
                 </div>
-
 
             </div>
         </div>
 
-
-
     </div>
-    
     <div id="load">
         @yield('content')
 
         @if( !empty(Route::current()) && Route::current()->getName() != 'admin' && Route::current()->getName() != 'agent' && Route::current()->getName() != 'bnd.matches.active' && Route::current()->getName() != 'bnd.match.view' && Route::current()->getName() != 'matchmaker' )
         
-            @if( Route::current()->getName() == 'match.view')
-                @if(Auth::guest() || (Auth::guest() == false && Auth::user()->type == 'user'))
+
+            @if(1 == 2)
+                @if( Route::current()->getName() == 'match.view')
+                    @if(Auth::guest() || (Auth::guest() == false && Auth::user()->type == 'user'))
+                        <recent-matches></recent-matches>
+                    @endif
+                @else 
                     <recent-matches></recent-matches>
                 @endif
-            @else 
-                <recent-matches></recent-matches>
             @endif
             
             <user-messages logged-in="{{ Auth::guest() ? 0 : 1 }}"></user-messages>

@@ -1,5 +1,5 @@
 <template>
-	<div id="topbets" class="right-content" style="margin-top: 0">
+	<div id="topbets" class="right-content recent-matches-content" style="margin-top: 0">
 		<div class="right-blk">
 			<div class="title-right">Recent Results</div>
 			<!-- Recent category buttons -->
@@ -45,7 +45,7 @@
 			<div class="recent-box" style="display:none">
 				<div>
 					<ul>
-						<li v-for="match in recent_matches" :key="`match-${match.id}`">
+						<li class="li-recent-matches" v-for="match in recent_matches" :key="`match-${match.id}`">
 							<a :href="'/match/' + match.id">
 								<div class="row">
 									<div class="col-xs-9">
@@ -203,6 +203,7 @@
 <script>
 	export default {
 		name: 'RecentMatches',
+		props: ['matches'],
 		data: function() {
 			return {
 				recent_matches: []
@@ -210,7 +211,13 @@
 		},
 		mounted() {
 			console.log(this.message);
+			console.log('asdf', this.matches)
 			$('.all-match-btn').trigger('click');
+		},
+		watch: {
+			// category: function() {
+			// 	console.log('category', category)
+			// }
 		},
 		methods: {
 			fetchRecentMatches(evt, type) {
@@ -225,10 +232,16 @@
 					data: { type: type },
 					success: function(data) {
 						$('.recent-box').show();
+						console.log('ddd', data)
 						self.recent_matches = data;
 					},
-					error: function() {}
+					error: function(error) {
+						console.log('errr', error)
+					}
 				});
+			},
+			test(data) {
+				alert(data);
 			}
 		}
 	};
@@ -258,5 +271,9 @@
 
 	.text-gray {
 		color: gray;
+	}
+
+	.li-recent-matches {
+		background: #1e1d2b;
 	}
 </style>

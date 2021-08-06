@@ -272,249 +272,204 @@
 @endsection
 
 @section('content')
-<div class="main-container dark-grey">
-    <div class="m-container1" id="left">
-        <div class="main-ct" style="margin-bottom: 0">
-            <div class="title">EVENTS </div>
-            <div class="clearfix"></div>
-            <div class="col-md-12 tournament_bet">
-                
-                <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
-                    @foreach($leagues as $key => $league)
-                    <div class="panel panel-default">
-                        <div class="panel-heading" role="tab" id="heading{{$league->id}}">
-                            <h4 class="panel-title" style="text-align: left">
-                                @if($key == 0)
-                                <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapse{{$league->id}}" aria-expanded="true" aria-controls="collapse{{$league->id}}">
-                                    {{$league->name}}
-                                </a>
-                                @else
-                                <a {{$league->betting_status == 1 ? '' : 'class="collapsed"'}} role="button" data-toggle="collapse" data-parent="#accordion" href="#collapse{{$league->id}}" aria-expanded="{{$league->betting_status == 1 ? 'true' : 'false'}}" aria-controls="collapse{{$league->id}}">
-                                    {{$league->name}}
-                                </a>
-                                @endif
-                                @if($league->betting_status == 1)
-                                <span class="pull-right green"><strong>Open</strong></span>
-                                @elseif($league->betting_status == -1)
-                                <span class="pull-right">Settled: <strong class="green">{{$league->champion->name}}</strong> (Winner)</span>
-                                @else
-                                <span class="pull-right"><strong>Ongoing</strong></span>
-                                @endif
-                            </h4>
-                        </div>
-                        @if($key == 0)
-                        <div id="collapse{{$league->id}}" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="heading{{$league->id}}">
-                        @else
-                        <div id="collapse{{$league->id}}" class="panel-collapse collapse {{$league->betting_status == 1 ? 'in' : ''}}" role="tabpanel" aria-labelledby="heading{{$league->id}}">
-                        @endif
-                            <div class="panel-body" style="padding: 1px; background-image: url({{asset('/images/bg_03.jpg')}})">
-                                @foreach($league->teams as $index => $team)
-                                @if($index == 0)
-                                <div class="col-md-6" style="padding-left: 0; padding-right: 1px">
-                                    <table border="1" class="table table-responsive table-border" style="text-align: center; margin-bottom: 0">
-                                        <thead>
-                                            <tr>
-                                                <th style="text-align: center; width: 82px;">Team</th>
-                                                <th style="text-align: center; font-size: 90%">% of Winning</th>
-                                                <th style="text-align: center">Ratio</th>
-                                                <th style="text-align: center; font-size: 90%">Possible win per 100</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            @endif
-                                            @if($index == intVal(round($league->teams->count()/2)))
-                                        </tbody>
-                                    </table>
+<div class="main-container" id="app2ez">
+    <div class="container app-container">
+        <div>
+            <div class="col-md-7">
+                <div class="row margin-bottom-20">
+                    <button id="loadAll" type="button" class="btn btn-info btn-all-matches categorybtn" data-pointer="0">All Games</button>
+                    <img id="loadDota" class="icon-game-type img-circle categorybtn" data-pointer="0" src="{{ asset('images/dota-icon.png') }}"/>
+                    <img id="loadCsgo" class="icon-game-type img-circle categorybtn" data-pointer="0" src="{{ asset('images/csgo-icon.png') }}"/>
+                    <img id="loadLol" class="icon-game-type img-circle categorybtn" data-pointer="0" src="{{ asset('images/lol-icon.png') }}"/>
+                    <img id="loadNbaPlayoffs" class="icon-game-type img-circle categorybtn" data-pointer="0" src="{{ asset('images/nba-icon.png') }}"/>
+                    <img id="loadSports" class="icon-game-type img-circle categorybtn" data-pointer="0" src="{{ asset('images/sports-icon.png') }}"/>
+
+                    <div class="menu pull-right margin-right-18">
+                        <button type="button" class="btn btn-link" id="btn-upcoming">Upcoming</button>
+                        <span class="span-divider">|</span>
+                        <button type="button" class="btn btn-link" id="btn-result">Results</button>
+                    </div>
+                </div>
+
+                <div class="row upcoming-display">
+                    <div class="col-md-12" id="matchesHolder">
+                    @foreach($matches as $index => $match)
+                        <a href="{{ url('/') . '/match/' . $match->id }}">
+                            <div class="row game-card matchmain">
+                                <div class="col-md-4 game-card-img" style="background-image: url({{ url('/images') . '/' . $match->league->image }});">
+                                    <span class="game-card-time">
+                                    @if($match->status == 'ongoing')
+                                        <img class="" src="{{ asset('images/live.png') }}"/>
+                                    @elseif($match->status == 'settled')
+                                        {{$match->schedule->diffForHumans()}} <span style="color: #606060; font-weight: bold; font-size: 16px">&nbsp;SETTLED</span>
+                                    @elseif($match->status == 'draw')
+                                        {{$match->schedule->diffForHumans()}} <span style="color: #606060; font-weight: bold; font-size: 16px">&nbsp;DRAW - CREDITS RETURNED</span>
+                                    @else
+                                    <span class="match_countdown" data-schedule="{{$match->schedule}}">{{$match->schedule->diffForHumans()}}</span>
+                                    @endif
+                                    </span>
                                 </div>
-                                <div class="col-md-6" style="padding-left: 1px; padding-right: 0">
-                                    <table border="1" class="table table-responsive table-border" style="text-align: center; margin-bottom: 0">
-                                        <thead>
-                                            <tr>
-                                                <th style="text-align: center; width: 82px;">Team</th>
-                                                <th style="text-align: center; font-size: 90%">% of Winning</th>
-                                                <th style="text-align: center">Ratio</th>
-                                                <th style="text-align: center; font-size: 90%">Possible win per 100</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            @endif
-                                            <tr>
-                                                <td style="position: relative">
-                                                    <img src="{{asset($team->image)}}" title="{{$team->name}}" style="width: 82px;">
-                                                    @if($team->pivot->is_favorite)
-                                                    <span class="favorite_team" title="Favorite team"></span>
-                                                    @endif
-                                                </td>
-                                                <td style="vertical-align: middle;">{{ round($team->teamPercentage, 2) }}%</td>
-                                                <td style="vertical-align: middle;">
-                                                    {{ bcdiv($team->teamRatio, 1 ,2) }}
-                                                </td>
-                                                <td style="vertical-align: middle;">
-                                                    @if($team->teamRatio > 0)
-                                                    <strong style="color: green">&#8369; {{ number_format((100 * bcdiv($team->teamRatio, 1 ,2) ), 2, '.', ',') }}</strong>
-                                                    @else
-                                                    &#8369; 0
-                                                    @endif
-                                                </td>
-                                            </tr>
-                                            @if($league->teams->count() == ($index+1))
-                                        </tbody>
-                                    </table>
+                                <div class="col-md-8 game-card-padding">
+                                    <div class="row text-center game-card-title-container">
+                                        <span class="game-card-title align-baseline">{{ !!$match->label ? $match->label : '' }}</span>
+                                    </div>
+
+                                    <div class="row text-center">
+                                        <div class="col-md-4">
+                                            <div>
+                                                <img class="match-team-logo" src="{{ $match->teamA->image }}" />
+                                            </div>
+                                            <div class="match-team-name">
+                                                {!! str_limit($match->teamA->shortname, 10, '..') !!}
+                                            </div>
+                                            <div class="match-team-percentage">
+                                                {{ $match->teama_percentage }}%
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4"><div class="match-type">{{$match->best_of}}</div></div>
+                                        <div class="col-md-4">
+                                            <div>
+                                                <img class="match-team-logo" src="{{ $match->teamB->image }}" />
+                                            </div>
+                                            <div class="match-team-name">
+                                                {!! str_limit($match->teamB->shortname, 10, '..') !!}
+                                            </div>
+                                            <div class="match-team-percentage">
+                                                {{ $match->teamb_percentage }}%
+                                            </div>
+                                        </div>
+                                    </div>
+
                                 </div>
-                                @endif
-                                @endforeach
-                                <div style="position: relative">
-                                    <img src="{{$league->bottom_image ? url('/') . '/' . $league->bottom_image : asset('images/bottom_tournament_bg.png')}}" style="width: 100%; max-height: 103px;">
-                                    <a href="{{url('/tournament') . '/' . $league->id}}" style="position: absolute; bottom: 5px; right: 5px; font-weight: bold; color: black; background-color: orange" class="btn btn-warning">Place Bet</a>
-                                </div>
+                            </div>
+                        </a>
+                    @endforeach
+                    </div>
+                </div>
+
+                <div class="row upcoming-display">
+                    <div class="col-md-12" id="matchesHolder">
+                        <div class="row game-card-more matchmain">
+                            <div class="col-md-12 text-center">
+                                <!-- Show more buttons all -->
+                                <button id="loadAllMore" type="button" class="btn btn-info btn-show-more hidebtn btnall loadMoreBtn" data-pointer="0" data-loading-text="Loading ... <span class='glyphicon glyphicon-refresh fa-spin'></span>"><span><b>Show More <i class="fa fa-angle-double-down"></i></b></span></button>
+
+                                <!-- Show more button dota -->
+                                <button id="loadDotaMore" type="button" class="btn btn-info btn-show-more hidebtn btndota loadMoreBtn" data-pointer="0" data-loading-text="Loading ... <span class='glyphicon glyphicon-refresh fa-spin'></span>"><span><b>Show More <i class="fa fa-angle-double-down"></i></b></span></button>
+
+                                <!-- Show more button csgo -->
+                                <button id="loadCsgoMore" type="button" class="btn btn-info btn-show-more hidebtn btncsgo loadMoreBtn" data-pointer="0" data-loading-text="Loading ... <span class='glyphicon glyphicon-refresh fa-spin'></span>"><span><b>Show More <i class="fa fa-angle-double-down"></i></b></span></button>
+
+                                <button id="loadLolMore" type="button" class="btn btn-info btn-show-more hidebtn btnlol loadMoreBtn" data-pointer="0" data-loading-text="Loading ... <span class='glyphicon glyphicon-refresh fa-spin'></span>"><span><b>Show More <i class="fa fa-angle-double-down"></i></b></span></button>
+
+                                <!-- Show more button sports -->
+                                <button id="loadSportsMore" type="button" class="btn btn-info btn-show-more hidebtn btnsports loadMoreBtn" data-pointer="0" data-loading-text="Loading ... <span class='glyphicon glyphicon-refresh fa-spin'></span>"><span><b>Show More <i class="fa fa-angle-double-down"></i></b></span></button>
+
+                                <button id="loadNbaPlayoffsMore" type="button" class="btn btn-info btn-show-more hidebtn btnnbaplayoffs loadMoreBtn" data-pointer="0" data-loading-text="Loading ... <span class='glyphicon glyphicon-refresh fa-spin'></span>"><span><b>Show More <i class="fa fa-angle-double-down"></i></b></span></button>
+                                <!-- <button type="button" class="btn btn-info btn-show-more"><span><b>Show More</b></span></button> -->
                             </div>
                         </div>
                     </div>
-                    @endforeach
                 </div>
-                
-            </div>
-        </div>
-    </div>
-    <div class="m-container2">
-        <div  class="main-ct">
-            <div class="title">MATCHES </div>
-                <!-- Category buttons All, Dota2, Csgo, Sports -->
-                <div style="background-color: #f1f1f1;">
-                    <button id="loadAll" class="all-match-button btncategory focusbtn selected categorybtn" data-pointer="0" onclick=""><strong class="txt"> ALL</strong></button>
-                    <button id="loadDota" class="dota-match-button btncategory focusbtn categorybtn" data-pointer="0" onclick=""><img src="{{ asset('/images/dota2icon.png')}}"><strong class="txt"> DOTA2</strong></button>
-                    <button id="loadCsgo" class="csgo-match-button btncategory focusbtn categorybtn" data-pointer="0" onclick=""><img src="{{ asset('/images/csgoicon.png')}}"><strong class="txt"> CS:GO<strong></button>
-                    <button id="loadLol" class="lol-match-button btncategory focusbtn categorybtn" data-pointer="0" onclick=""><img src="{{ asset('/images/lol24px.png')}}"><strong class="txt"> LoL<strong></button>
-                    <button id="loadSports" class="sports-match-button btncategory focusbtn categorybtn" data-pointer="0" onclick=""><img src="{{ asset('/images/sportsicon.png')}}"><strong class="txt"> SPORTS</strong></button>
-                    <button id="loadNbaPlayoffs" class="nbaplayoffs-match-button btncategory focusbtn categorybtn" data-pointer="0" onclick=""><img src="{{ asset('/images/nba24px.png')}}"><strong class="txt"> NBA PLAYOFFS SERIES<strong></button>
-                </div>
-            <div id="matchesHolder">
-                @foreach($matches as $index => $match)
-                <div class="matchmain">
-                    <div class="infor">
-                        <div class="time">
-                            @if($match->status == 'ongoing')
-                            <span style="color: #72A326; text-shadow: 1px 1px 0px #4A7010; font-weight: bold; font-size: 16px">&nbsp;LIVE</span>
-                            @elseif($match->status == 'settled')
-                            {{$match->schedule->diffForHumans()}} <span style="color: #606060; font-weight: bold; font-size: 16px">&nbsp;SETTLED</span>
-                            @elseif($match->status == 'draw')
-                            {{$match->schedule->diffForHumans()}} <span style="color: #606060; font-weight: bold; font-size: 16px">&nbsp;DRAW - CREDITS RETURNED</span>
-                            @else
-                            <strong class="match_countdown" data-schedule="{{$match->schedule}}">{{$match->schedule->diffForHumans()}}</strong>
-                            @endif
-                        </div>
-                        <div class="series">
-                            @if($match->league->type == 'dota2')
-                                <img src="/images/dota2icon.png" />
-                            @elseif($match->league->type == 'csgo')
-                                <img src="/images/csgoicon.png" />
-                            @elseif($match->league->type == 'LoL')
-                                <img src="/images/lol24px.png" />    
-                            @else
-                                <img src="/images/sportsicon.png" />                                                               
-                            @endif
-                            {{ $match->league->name }}
-                        </div>
-                    </div>
-                    @if(in_array($match->status, ['open','ongoing']))
-                    <div class="match " style="background-image: url({{ url('/public_image') . '/' . $match->league->image }})">
-                    @else
-                    <div class="match " style="background-image: url({{ url('/public_image') . '/' . $match->league->image }});">
+
+                <div class="row result-display">
+                @if( !empty(Route::current()) && Route::current()->getName() != 'admin' && Route::current()->getName() != 'agent' && Route::current()->getName() != 'bnd.matches.active' && Route::current()->getName() != 'bnd.match.view' && Route::current()->getName() != 'matchmaker' )
+                    @if( Route::current()->getName() == 'match.view')
+                        @if(Auth::guest() || (Auth::guest() == false && Auth::user()->type == 'user'))
+                            <recent-matches ref="recentMatches" :matches="{{ json_encode($matches) }}" ></recent-matches>
+                        @endif
+                    @else 
+                        <recent-matches ref="recentMatches" :matches="{{ json_encode($matches) }}"></recent-matches>
                     @endif
-                
-                        <div class="col-xs-12 col-sm-9 col-md-9 col-lg-9">
-                            <a href="{{ url('/') . '/match/' . $match->id }}">
-                                <div class="match-details">
-                                    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 text-center">
-                                        {{ !!$match->label ? $match->label : '' }}
-                                    </div>
-                                    <div class="row small-gutter flex-center">
-                                        <div class="col-xs-4 col-sm-3 col-md-3 col-lg-3 no-padding text-center">
-                                            
-                                            <div><img class="match-team-logo" src="{{ $match->teamA->image }}" /></div>
-                                            <div class="team-name hide-mobile">
-                                                {!! str_limit($match->teamA->name, 13, '...') !!}
-                                            </div>
-                                            <div class="team-name hide-desktop">
-                                                {!! str_limit($match->teamA->shortname, 10, '..') !!}
-                                            </div>  
-                                            <button class="btn btn-warning team-percentage-btn btn-sm w-100 hide-desktop">{{$match->teama_percentage}}%</button>                                          
-                                            {{-- <div>{{$match->teama_percentage}}%</div> --}}
-                                        </div>
-                                        <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2 no-padding text-left bet-percentage hide-mobile">
-                                            
-                                            <button class="btn btn-warning team-percentage-btn btn-sm w-100">{{$match->teama_percentage}}%</button>
-                                        </div>
 
-                                        <div class="col-xs-4 col-sm-2 col-md-2 col-lg-2 no-padding text-center">
-                                            
-                                            <div class="match-counter-container">{{$match->best_of}}</div>
-                                            @if( !empty($match->team_c) )
-                                                <div class="hide-mobile">
-                                                    <div class="no-padding text-center bet-percentage">
-                                                        <button class="btn btn-warning team-percentage-btn btn-sm w-100">{{ !!$match->teamc_percentage ? $match->teamc_percentage : 0.00 }}%</button>
-                                                    </div>
-                                                    <div class="team-name draw-text">DRAW</div>
-                                                </div>
-                                            
-                                                <div class="hide-desktop">
-                                                    <div class="team-name draw-text">DRAW</div>
-                                                    <div class="no-padding text-center bet-percentage">
-                                                        <button class="btn btn-warning team-percentage-btn btn-sm w-100">{{ !!$match->teamc_percentage ? $match->teamc_percentage : 0.00 }}%</button>
-                                                    </div>
-                                                </div>                                                
-                                            @endif
-                                        </div>
+                    <user-messages logged-in="{{ Auth::guest() ? 0 : 1 }}"></user-messages>
+                    {{-- <chinese-new-year-flip-cards logged-in="{{ Auth::guest() ? 0 : 1 }}"></chinese-new-year-flip-cards> --}}
+                    @if(!Auth::guest() && Auth::user()->type == 'user' &&  Auth::user()->credits >= 100)
+                        <easter-egg-event logged-in="{{ Auth::guest() ? 0 : 1 }}" user-id="{{ Auth::id() }}"></easter-egg-event>
+                    @endif
+                @endif
+                </div>
+            </div>
 
-                                        <div class="col-xs-4 col-sm-2 col-md-2 col-lg-2 no-padding text-right bet-percentage hide-mobile">
-                                            <button class="btn btn-warning team-percentage-btn btn-sm w-100">{{$match->teamb_percentage}}%</button>
-                                        </div>                                                                                                                        
-                                        <div class="col-xs-4 col-sm-3 col-md-3 col-lg-3 no-padding text-center">
-                                        
-                                            <div><img class="match-team-logo" src="{{ $match->teamB->image }}" /></div>
-                                            <div class="team-name hide-mobile">
-                                                {!! str_limit($match->teamB->name, 13, '...') !!}
-                                            </div>
-                                            <div class="team-name hide-desktop">
-                                                {!! str_limit($match->teamB->shortname,10, '..') !!}
-                                            </div>
-                                            <button class="btn btn-warning team-percentage-btn btn-sm w-100 hide-desktop">{{$match->teamb_percentage}}%</button>    
-                                        </div>   
-                                    </div>                                                                  
-                                </div>
-                            </a>
-                        </div>
+            <div class="col-md-5">
+                <div class="row margin-bottom-28">
+                    <div class="col-md-12">
+                        <div class="event-container">Events</div>
                     </div>
                 </div>
+
+
+
+                <div class="panel-group" id="accordion">
+                @foreach($leagues as $key => $league)
+                    <div class="panel panel-default event-panel">
+                        <div class="panel-heading event-panel-heading">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <button type="button" class="btn btn-link btn-event-open">Open</button>
+                                </div>
+                                <div class="col-md-6 text-right">
+                                    <a href="{{url('/tournament') . '/' . $league->id}}">
+                                        <button type="button" class="btn btn-warning btn-sm btn-place-bet">Place Bet</button>
+                                    </a>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12 text-center league-title">
+                                    {{$league->name}}
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-12 text-center league-title">
+                                    <span class="info-box-icon collapse-event bg-aqua" data-toggle="collapse" data-parent="#accordion" href="#collapse{{$key}}"><i class="fa fa-angle-down" aria-hidden="true"></i></span>
+                                </div>
+                            </div>
+          
+                        </div>
+                        <div id="collapse{{$key}}" class="panel-collapse collapse {{ ($key == 0) ? 'in' : '' }}">
+                            <div class="panel-body event-panel-body">
+
+                                <table class="event-table">
+                                    <thead>
+                                        <tr class="tr-event">
+                                            <th class="table-th text-center">Team</th>
+                                            <th class="table-th text-center">Winning %</th>
+                                            <th class="table-th text-center">Ratio</th>
+                                            <th class="table-th text-center">Possible win per 100</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                    @foreach($league->teams as $index => $team)
+                                        <tr class="tr-event">
+                                            <th class="text-center"><img src="{{asset($team->image)}}" title="{{$team->name}}" style="width: 82px;"></th>
+                                            <td class="text-center">{{ round($team->teamPercentage, 2) }}%</td>
+                                            <td class="text-center">{{ bcdiv($team->teamRatio, 1 ,2) }}</td>
+                                            <td class="text-center">
+                                            @if($team->teamRatio > 0)
+                                                <strong style="color: green">&#8369; {{ number_format((100 * bcdiv($team->teamRatio, 1 ,2) ), 2, '.', ',') }}</strong>
+                                                @else
+                                                &#8369; 0
+                                            @endif
+                                            </td>
+                                    @endforeach
+                                        </tr>
+                                    </tbody>
+                                </table>
+
+                            </div>
+                        </div>
+                    </div>
                 @endforeach
                 </div>
-            </div>
-            <!-- Show more buttons all -->
-            <div style="text-align: center; margin-bottom: 10px">
-                <center><button id="loadAllMore" type="button" class="btn btn-default btn-sm hidebtn btnall loadMoreBtn" data-pointer="0" data-loading-text="Loading ... <span class='glyphicon glyphicon-refresh fa-spin'></span>">Show more <i class="fa fa-angle-double-down"></i></button></center>
-            </div>
-            <!-- Show more button dota -->
-            <div style="text-align: center; margin-bottom: 10px">
-                <center><button id="loadDotaMore" type="button" class="btn btn-default btn-sm hidebtn btndota loadMoreBtn" data-pointer="0" data-loading-text="Loading ... <span class='glyphicon glyphicon-refresh fa-spin'></span>">Show more <i class="fa fa-angle-double-down"></i></button></center>
-            </div>
-            <!-- Show more button csgo -->
-            <div style="text-align: center; margin-bottom: 10px">
-                <center><button id="loadCsgoMore" type="button" class="btn btn-default btn-sm hidebtn btncsgo loadMoreBtn" data-pointer="0" data-loading-text="Loading ... <span class='glyphicon glyphicon-refresh fa-spin'></span>">Show more <i class="fa fa-angle-double-down"></i></button></center>
-            </div>
-            <div style="text-align: center; margin-bottom: 10px">
-                <center><button id="loadLolMore" type="button" class="btn btn-default btn-sm hidebtn btnlol loadMoreBtn" data-pointer="0" data-loading-text="Loading ... <span class='glyphicon glyphicon-refresh fa-spin'></span>">Show more <i class="fa fa-angle-double-down"></i></button></center>
-            </div>            
-            <!-- Show more button sports -->
-            <div style="text-align: center; margin-bottom: 10px">
-                <center><button id="loadSportsMore" type="button" class="btn btn-default btn-sm hidebtn btnsports loadMoreBtn" data-pointer="0" data-loading-text="Loading ... <span class='glyphicon glyphicon-refresh fa-spin'></span>">Show more <i class="fa fa-angle-double-down"></i></button></center>
-            </div>
 
-            <div style="text-align: center; margin-bottom: 10px">
-                <center><button id="loadNbaPlayoffsMore" type="button" class="btn btn-default btn-sm hidebtn btnnbaplayoffs loadMoreBtn" data-pointer="0" data-loading-text="Loading ... <span class='glyphicon glyphicon-refresh fa-spin'></span>">Show more <i class="fa fa-angle-double-down"></i></button></center>
-            </div>   
 
+
+
+
+
+            </div>
         </div>
-        
     </div>
 </div>
 
@@ -581,264 +536,119 @@
 @endsection
 @section('script')
 <script id="matches-template" type="text/template">
-    <div class="matchmain">
-        <div class="infor">
-            <div class="time">
-                @{{& status}}
+<a href="{{url('/')}}/match/@{{id}}">
+        <div class="row game-card matchmain">
+            <div class="col-md-4 game-card-img" style="background-image: url({{url('/images')}}/@{{league.image}});">
+                <span class="game-card-time">
+                @{{#ongoing}}
+                    <img class="" src="{{ asset('images/live.png') }}"/>
+                @{{/ongoing}}
+                @{{#open}}
+                    <span class="match_countdown" data-schedule="@{{formatted_schedule}}">@{{formatted_schedule}}</span>
+                @{{/open}}
+                </span>
             </div>
-            <div class="series">
-                @{{#isDOTA}}
-                    <img src="/images/dota2icon.png" />
-                @{{/isDOTA }}
-                @{{#isCSGO}}
-                    <img src="/images/csgoicon.png" />
-                @{{/isCSGO }}  
-                @{{#isLOL}}
-                    <img src="/images/lol24px.png" />    
-                @{{/isLOL }} 
-                @{{#isSPORTS}}
-                    <img src="/images/sportsicon.png" />    
-                @{{/isSPORTS }}                   
-                @{{league.name}}
-            </div>
-        </div>
-        @{{#is_current}}
-        <div class="match " style="background-image: url({{url('/public_image')}}/@{{league.image}})">
-        @{{/is_current}}
-        @{{^is_current}}
-        <div class="match " style="background-image: url({{url('/public_image')}}/@{{league.image}});">
-        @{{/is_current}}
+            <div class="col-md-8 game-card-padding">
+                <div class="row text-center game-card-title-container">
+                    <span class="game-card-title align-baseline">@{{label}}</span>
+                </div>
 
-            <div class="col-xs-12 col-sm-9 col-md-9 col-lg-9">
-                <a href="{{url('/')}}/match/@{{id}}">
-                    <div class="match-details">
-                        @{{#label}}
-                        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 text-center">
-                            @{{label}}
+                <div class="row text-center">
+                    <div class="col-md-4">
+                        <div>
+                            <img class="match-team-logo" src="{{url('/')}}/@{{team_a.image}}" />
                         </div>
-                        @{{/label}}
-                        <div class="row small-gutter flex-center">
-                
-                            <div class="col-xs-4 col-sm-3 col-md-3 col-lg-3 no-padding text-center">
-                                <div><img class="match-team-logo" src="{{url('/')}}/@{{team_a.image}}" /></div>
-                                <div class="team-name hide-mobile">
-                                    <span @{{#team_a_winner}} class="text-success" @{{/team_a_winner}}>
-                                        @{{team_a.name}}
-                                    </span>
-                                    @{{#team_a_winner}}
-                                        <i
-                                            class="fa fa-trophy text-primary"
-                                            aria-hidden="true"
-                                            title="Winner"
-                                        ></i>
-                                    @{{/team_a_winner}}
-                                </div>
-                                <div class="team-name hide-desktop">
-                                    <span @{{#team_a_winner}} class="text-success" @{{/team_a_winner}}>
-                                        @{{team_a.shortname}}
-                                    </span>                                    
-                                    @{{#team_a_winner}}
-                                        <i
-                                            class="fa fa-trophy text-primary"
-                                            aria-hidden="true"
-                                            title="Winner"
-                                        ></i>
-                                    @{{/team_a_winner}}                                    
-                                </div>  
-                                <button class="btn btn-warning team-percentage-btn btn-sm w-100 hide-desktop">@{{teamawin_percentage}}%</button>                                          
+                        <div class="match-team-name">
+                            <div class="team-name hide-mobile">
+                                @{{team_a.name}}
                             </div>
-                            <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2 no-padding text-left bet-percentage hide-mobile">
-                                
-                                <button class="btn btn-warning team-percentage-btn btn-sm w-100">@{{teamawin_percentage}}%</button>
+                            <div class="team-name hide-desktop">
+                                @{{team_a.shortname}}
                             </div>
-
-                            <div class="col-xs-4 col-sm-2 col-md-2 col-lg-2 no-padding text-center">
-                                
-                                <div class="match-counter-container">@{{best_of}}</div>
-                                @{{#team_c}}
-                                    <div class="hide-mobile">
-                                        <div class="no-padding text-center bet-percentage">
-                                            <button class="btn btn-warning team-percentage-btn btn-sm w-100">@{{teamcwin_percentage}}%</button>
-                                        </div>
-                                        <div class="team-name draw-text">
-                                            <span @{{#team_c_winner}} class="text-success" @{{/team_c_winner}}>
-                                                DRAW
-                                            </span>
-                                            @{{#team_c_winner}}
-                                                <i
-                                                    class="fa fa-trophy text-primary"
-                                                    aria-hidden="true"
-                                                    title="Winner"
-                                                ></i>
-                                            @{{/team_c_winner}}                                           
-                                        </div>
-                                    </div>
-                                
-                                    <div class="hide-desktop">
-                                        <div class="team-name draw-text">
-                                            <span @{{#team_c_winner}} class="text-success" @{{/team_c_winner}}>
-                                                DRAW
-                                            </span>
-                                            @{{#team_c_winner}}
-                                                <i
-                                                    class="fa fa-trophy text-primary"
-                                                    aria-hidden="true"
-                                                    title="Winner"
-                                                ></i>
-                                            @{{/team_c_winner}}                                                
-                                        </div>
-                                        <div class="no-padding text-center bet-percentage">
-                                            <button class="btn btn-warning team-percentage-btn btn-sm w-100">@{{teamcwin_percentage}}%</button>
-                                        </div>
-                                    </div>                                                
-                                @{{/team_c}}
-                            </div>
-
-                            <div class="col-xs-4 col-sm-2 col-md-2 col-lg-2 no-padding text-right bet-percentage hide-mobile">
-                                <button class="btn btn-warning team-percentage-btn btn-sm w-100">@{{teambwin_percentage}}%</button>
-                            </div>         
-                            
-
-                            <div class="col-xs-4 col-sm-3 col-md-3 col-lg-3 no-padding text-center">                     
-                            
-                                <div><img class="match-team-logo" src="{{url('/')}}/@{{team_b.image}}" /></div>
-                                <div class="team-name hide-mobile">
-                                    <span @{{#team_b_winner}} class="text-success" @{{/team_b_winner}}>
-                                        @{{team_b.name}}
-                                    </span>
-                                    @{{#team_b_winner}}
-                                        <i
-                                            class="fa fa-trophy text-primary"
-                                            aria-hidden="true"
-                                            title="Winner"
-                                        ></i>
-                                    @{{/team_b_winner}}                                    
-                                </div>
-                                <div class="team-name hide-desktop">
-                                    <span @{{#team_b_winner}} class="text-success" @{{/team_b_winner}}>
-                                        @{{team_b.shortname}}
-                                    </span>
-                                    @{{#team_b_winner}}
-                                        <i
-                                            class="fa fa-trophy text-primary"
-                                            aria-hidden="true"
-                                            title="Winner"
-                                        ></i>
-                                    @{{/team_b_winner}}                                         
-                                </div>  
-                                <button class="btn btn-warning team-percentage-btn btn-sm w-100 hide-desktop">@{{teambwin_percentage}}%</button>    
-                            </div>   
-                        </div>                                                                  
+                        </div>
+                        <div class="match-team-percentage">
+                            @{{teama_percentage}}%
+                        </div>
                     </div>
-                </a>
+                    <div class="col-md-4"><div class="match-type">{{$match->best_of}}</div></div>
+                    <div class="col-md-4">
+                        <div>
+                            <img class="match-team-logo" src="{{url('/')}}/@{{team_b.image}}" />
+                        </div>
+                        <div class="match-team-name">
+                            <div class="team-name hide-mobile">
+                                @{{team_b.name}}
+                            </div>
+                            <div class="team-name hide-desktop">
+                                @{{team_b.shortname}}
+                            </div>
+                        </div>
+                        <div class="match-team-percentage">
+                            @{{teamb_percentage}}%
+                        </div>
+                    </div>
+                </div>
             </div>
-
-
-
         </div>
-    </div>
+    </a>
 </script>
 <!-- Matches template Ongoing and Open -->
 <script id="matches" type="text/template">
-    <div class="matchmain">
-        <div class="infor">
-            <div class="time">
-                    @{{#ongoing}}
-                        <span style="color: #72A326; text-shadow: 1px 1px 0px #4A7010; font-weight: bold; font-size: 16px">&nbsp;LIVE</span>
-                    @{{/ongoing}}
-                    @{{#open}}
-                        <strong class="match_countdown" data-schedule="@{{formatted_schedule}}">
-                        @{{formatted_schedule}}</strong>
-                    @{{/open}}
+    <a href="{{url('/')}}/match/@{{id}}">
+        <div class="row game-card matchmain">
+            <div class="col-md-4 game-card-img" style="background-image: url({{url('/images')}}/@{{league.image}});">
+                <span class="game-card-time">
+                @{{#ongoing}}
+                    <img class="" src="{{ asset('images/live.png') }}"/>
+                @{{/ongoing}}
+                @{{#open}}
+                    <span class="match_countdown" data-schedule="@{{formatted_schedule}}">@{{formatted_schedule}}</span>
+                @{{/open}}
+                </span>
+            </div>
+            <div class="col-md-8 game-card-padding">
+                <div class="row text-center game-card-title-container">
+                    <span class="game-card-title align-baseline">@{{label}}</span>
                 </div>
-                        
-            <div class="series">
-                @{{#isDOTA}}
-                    <img src="/images/dota2icon.png" />
-                @{{/isDOTA }}
-                @{{#isCSGO}}
-                    <img src="/images/csgoicon.png" />
-                @{{/isCSGO }}  
-                @{{#isLOL}}
-                    <img src="/images/lol24px.png" />    
-                @{{/isLOL }} 
-                @{{#isSPORTS}}
-                    <img src="/images/sportsicon.png" />    
-                @{{/isSPORTS }}                   
-                @{{league.name}}
-            </div>
-        </div>
-            @{{#is_current}}
-            <div class="match " style="background-image: url({{url('/public_image')}}/@{{league.image}})">
-            @{{/is_current}}
-            @{{^is_current}}
-            <div class="match " style="background-image: url({{url('/public_image')}}/@{{league.image}})">
-            @{{/is_current}}
-            <div class="col-xs-12 col-sm-9 col-md-9 col-lg-9">
-                <a href="{{url('/')}}/match/@{{id}}">
-                    <div class="match-details">
-                        @{{#label}}
-                        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 text-center">
-                            @{{label}}
+
+                <div class="row text-center">
+                    <div class="col-md-4">
+                        <div>
+                            <img class="match-team-logo" src="{{url('/')}}/@{{team_a.image}}" />
                         </div>
-                        @{{/label}}
-                        <div class="row small-gutter flex-center">
-                            <div class="col-xs-4 col-sm-3 col-md-3 col-lg-3 no-padding text-center">
-                                
-                                <div><img class="match-team-logo" src="{{url('/')}}/@{{team_a.image}}" /></div>
-                                <div class="team-name hide-mobile">
-                                    @{{team_a.name}}
-                                </div>
-                                <div class="team-name hide-desktop">
-                                    @{{team_a.shortname}}
-                                </div>  
-                                <button class="btn btn-warning team-percentage-btn btn-sm w-100 hide-desktop">@{{teama_percentage}}%</button>                                          
+                        <div class="match-team-name">
+                            <div class="team-name hide-mobile">
+                                @{{team_a.name}}
                             </div>
-                            <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2 no-padding text-left bet-percentage hide-mobile">
-                                
-                                <button class="btn btn-warning team-percentage-btn btn-sm w-100">@{{teama_percentage}}%</button>
+                            <div class="team-name hide-desktop">
+                                @{{team_a.shortname}}
                             </div>
-
-                            <div class="col-xs-4 col-sm-2 col-md-2 col-lg-2 no-padding text-center">
-                                
-                                <div class="match-counter-container">@{{best_of}}</div>
-                                @{{#team_c}}
-                                    <div class="hide-mobile">
-                                        <div class="no-padding text-center bet-percentage">
-                                            <button class="btn btn-warning team-percentage-btn btn-sm w-100">@{{teamc_percentage}}%</button>
-                                        </div>
-                                        <div class="team-name draw-text">DRAW</div>
-                                    </div>
-                                
-                                    <div class="hide-desktop">
-                                        <div class="team-name draw-text">DRAW</div>
-                                        <div class="no-padding text-center bet-percentage">
-                                            <button class="btn btn-warning team-percentage-btn btn-sm w-100">@{{teamc_percentage}}%</button>
-                                        </div>
-                                    </div>                                                
-                                @{{/team_c}}
-                            </div>
-
-                            <div class="col-xs-4 col-sm-2 col-md-2 col-lg-2 no-padding text-right bet-percentage hide-mobile">
-                                <button class="btn btn-warning team-percentage-btn btn-sm w-100">@{{teamb_percentage}}%</button>
-                            </div>                                                                                                                        
-                            <div class="col-xs-4 col-sm-3 col-md-3 col-lg-3 no-padding text-center">
-                            
-                                <div><img class="match-team-logo" src="{{url('/')}}/@{{team_b.image}}" /></div>
-                                <div class="team-name hide-mobile">
-                                    @{{team_b.name}}
-                                </div>
-                                <div class="team-name hide-desktop">
-                                    @{{team_b.shortname}}
-                                </div>  
-                                <button class="btn btn-warning team-percentage-btn btn-sm w-100 hide-desktop">@{{teamb_percentage}}%</button>    
-                            </div>   
-                        </div>                                                                  
+                        </div>
+                        <div class="match-team-percentage">
+                            @{{teama_percentage}}%
+                        </div>
                     </div>
-                </a>
+                    <div class="col-md-4"><div class="match-type">{{$match->best_of}}</div></div>
+                    <div class="col-md-4">
+                        <div>
+                            <img class="match-team-logo" src="{{url('/')}}/@{{team_b.image}}" />
+                        </div>
+                        <div class="match-team-name">
+                            <div class="team-name hide-mobile">
+                                @{{team_b.name}}
+                            </div>
+                            <div class="team-name hide-desktop">
+                                @{{team_b.shortname}}
+                            </div>
+                        </div>
+                        <div class="match-team-percentage">
+                            @{{teamb_percentage}}%
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
-    </div>
+    </a>
 </script>
 <!-- No matches template -->
 <script id="nomatch" type="text/template" >
@@ -922,7 +732,37 @@ $(document).ready(function(){
         $('.tournament-winner-timer').html(to_tournament_date);
 
     })
+
     $(document).ready(function() {
+        // var app = new Vue({
+        //     el: '#app2ez',
+        //     data: function () {
+        //         return {
+        //             category    : "loadAll",
+        //             selected_tab: 'upcoming',
+        //         }
+        //     },
+        //     methods: {
+        //         // callChildCreateItem: function() {
+        //         //     this.$refs.child.createItem()
+        //         // },
+        //         getRecentMatches: function(category) {
+        //             this.category = category;
+        //             console.log('tr',this.$refs.recentMatches)
+        //             this.$refs.recentMatches.test(category);
+        //         },
+        //         selectTab: function(tab) {
+        //             this.selected_tab = tab;
+        //         }
+        //     },
+        //     created() {
+        //         this.selected_tab = 'upcoming';
+
+        //         console.log(this.selected_tab, 'add')
+        //     }
+        // });
+
+
         checkPendingDeposit();
 
         $.each($('.match_countdown'), function(key, index) {
@@ -946,7 +786,7 @@ $(document).ready(function(){
                 var seconds = Math.floor((distance % (1000 * 60)) / 1000);
 
                 // Display the result in the element with id="demo"
-                element.innerHTML = (days > 0 ? days + "d " : "") + (hours > 0 ? hours + "h " : "") + (minutes > 0 ? minutes + "m " : "") + seconds + "s from now";
+                element.innerHTML = "in " + (days > 0 ? days + "d " : "") + (hours > 0 ? hours + "h " : "") + (minutes > 0 ? minutes + "m " : "") + seconds + "s";
 
                 // If the count down is finished, write some text 
                 if (distance < 0) {
@@ -977,14 +817,14 @@ $(document).ready(function(){
                     break;
                 case 'loadSportsMore':
                     url2 = "{{url('/match/loadSports')}}/" + $btn.data('pointer')
-                    break;      
+                    break;
                 case 'loadLol':
                 case 'loadLolMore':
                     url2 = "{{url('/match/loadLol')}}/" + $btn.data('pointer')
-                    break;    
+                    break;
                 case 'loadNbaPlayoffs':
                     url2 = "{{url('/match/loadNbaPlayoffs')}}/" + $btn.data('pointer')
-                    break;                                                            
+                    break;
             }
             $.get(url2)
             .done(function(data) {
@@ -992,23 +832,23 @@ $(document).ready(function(){
                 $new_contents = '';
                 $.each(data.matches, function() {
                     switch (this.league.type){
-                        case 'dota2': 
+                        case 'dota2':
                             this.isDOTA = true;
                             break;
-                        case 'csgo': 
+                        case 'csgo':
                             this.isCSGO = true;
-                            break;  
-                        case 'LoL': 
+                            break;
+                        case 'LoL':
                             this.isLOL = true;
                             break;
                         default:
-                            this.isSPORTS = true; 
-                            break;                                                         
-                    }                        
+                            this.isSPORTS = true;
+                            break;
+                    }
                     $new_contents += Mustache.render(container, this);
                 });
-      
-            
+
+
                 if($btn.data('pointer') == 0){
                     $('.nomatches').attr('style','display: none !important');
                     $('#matchesHolder').append($new_contents);
@@ -1028,80 +868,90 @@ $(document).ready(function(){
             var container = $("#matches").html();
             var container2 = $("#nomatch").html();
             var url = "";
-            switch(categ){
-                case 'loadAll':
-                    $("#loadAllMore").data('pointer',0);
-                    url = "{{url('/match/loadAll')}}/" + $btn.data('pointer')
-                    break;
-                case 'loadDota':
-                    $("#loadDotaMore").data('pointer',0);
-                    url = "{{url('/match/dota2')}}/" + $btn.data('pointer')
-                    break;
-                case 'loadCsgo':
-                    $("#loadCsgoMore").data('pointer',0);
-                    url = "{{url('/match/csgo')}}/" + $btn.data('pointer')
-                    break;
-                case 'loadSports':
-                    $("#loadSportsMore").data('pointer',0);
-                    url = "{{url('/match/sports')}}/" + $btn.data('pointer')
-                    break;
-                case 'loadLol':
-                    $("#loadLolMore").data('pointer',0);
-                    url = "{{url('/match/lol')}}/" + $btn.data('pointer')
-                    break;      
-                case 'loadNbaPlayoffs':
-                    $("#loadNbaPlayoffsMore").data('pointer',0);
-                    url = "{{url('/match/nbaplayoffs')}}/" + $btn.data('pointer')
-                    break;
-                break;                           
+            let recent_match_visibility = !$("#topbets").is(":hidden");
+
+            if(!recent_match_visibility) {
+                switch(categ){
+                    case 'loadAll':
+                        $("#loadAllMore").data('pointer',0);
+                        url = "{{url('/match/loadAll')}}/" + $btn.data('pointer')
+                        break;
+                    case 'loadDota':
+                        $("#loadDotaMore").data('pointer',0);
+                        url = "{{url('/match/dota2')}}/" + $btn.data('pointer')
+                        break;
+                    case 'loadCsgo':
+                        $("#loadCsgoMore").data('pointer',0);
+                        url = "{{url('/match/csgo')}}/" + $btn.data('pointer')
+                        break;
+                    case 'loadSports':
+                        $("#loadSportsMore").data('pointer',0);
+                        url = "{{url('/match/sports')}}/" + $btn.data('pointer')
+                        break;
+                    case 'loadLol':
+                        $("#loadLolMore").data('pointer',0);
+                        url = "{{url('/match/lol')}}/" + $btn.data('pointer')
+                        break;      
+                    case 'loadNbaPlayoffs':
+                        $("#loadNbaPlayoffsMore").data('pointer',0);
+                        url = "{{url('/match/nbaplayoffs')}}/" + $btn.data('pointer')
+                        break;
+                    break;                           
+                }
+                $.get(url)
+                .done(function(data) {
+                    $btn.button('reset');
+                    $new_contents = '';
+                    $.each(data.matches, function() {
+                        var match = this;
+                        
+                        switch(this.status){
+                            case 'open':
+                                match.open = true;
+                                break;
+                            case 'ongoing':
+                                match.ongoing = true;
+                                break;
+                        }
+                        switch (this.league.type){
+                            case 'dota2': 
+                                match.isDOTA = true;
+                                break;
+                            case 'csgo': 
+                                match.isCSGO = true;
+                                break;  
+                            case 'LoL': 
+                                match.isLOL = true;
+                                break;
+                            default:
+                                match.isSPORTS = true; 
+                                break;                                                         
+                        }
+                        match.formatted_schedule = moment().format(this.schedule);
+                        $new_contents += Mustache.render(container, this);
+                        
+                    });
+
+                    if($btn.data('pointer') == 0){
+                        $('#matchesHolder').html($new_contents);
+                    }
+                    else{
+                        $('#matchesHolder').append($new_contents);
+                    }
+
+                    $btn.data('pointer', data.pointer);
+
+                    $.each($('.match_countdown'), function(key, index) {
+                        countdown(this, $(this).data('schedule'));
+                    });
+                    
+                    if(data.matches == ''){
+                        $("#matchesHolder").html(container2)
+                    }
+                });
+            } else {
+                //app.getRecentMatches(categ);
             }
-            $.get(url)
-            .done(function(data) {
-                $btn.button('reset');
-                $new_contents = '';
-                $.each(data.matches, function() {
-                    var match = this;
-                    
-                    switch(this.status){
-                        case 'open':
-                            match.open = true;
-                            break;
-                        case 'ongoing':
-                            match.ongoing = true;
-                            break;
-                    }
-                    switch (this.league.type){
-                        case 'dota2': 
-                            match.isDOTA = true;
-                            break;
-                        case 'csgo': 
-                            match.isCSGO = true;
-                            break;  
-                        case 'LoL': 
-                            match.isLOL = true;
-                            break;
-                        default:
-                            match.isSPORTS = true; 
-                            break;                                                         
-                    }
-                    match.formatted_schedule = moment().format(this.schedule);
-                    $new_contents += Mustache.render(container, this);
-                    
-                });
-                if($btn.data('pointer') == 0){
-                $('#matchesHolder').html($new_contents);
-                }
-                else{
-                $('#matchesHolder').append($new_contents);
-                }
-                $btn.data('pointer', data.pointer);
-                $.each($('.match_countdown'), function(key, index) {
-                    countdown(this, $(this).data('schedule'));
-                });
-                if(data.matches == ''){
-                    $("#matchesHolder").html(container2)
-                }
-            });
          });
 
         function checkPendingDeposit() {
@@ -1143,11 +993,27 @@ $(document).ready(function(){
 
             return reminder;
         }
+
+
+        $("#btn-upcoming").click(function() {
+            //app.selected_tab = 'upcoming';
+            $(".upcoming-display").show();
+            $(".result-display").hide();
+        });
+
+        $("#btn-result").click(function() {
+            //app.selected_tab = 'result';
+            $(".result-display").show();
+            $(".upcoming-display").hide();
+            
+        });
+
     });
 //    $(window).scroll(function() {
 //        if($(window).scrollTop() == $(document).height() - $(window).height()) {
 //            console.log('loading more items...');
 //        }
 //    });
+
 </script>
 @endsection
