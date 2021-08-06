@@ -4358,15 +4358,13 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 /* harmony default export */ __webpack_exports__["default"] = ({
 	name: 'RecentMatches',
-	props: ['matches'],
+	props: [],
 	data: function data() {
 		return {
 			recent_matches: []
 		};
 	},
 	mounted: function mounted() {
-		console.log(this.message);
-		console.log('asdf', this.matches);
 		$('.all-match-btn').trigger('click');
 	},
 
@@ -4394,7 +4392,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 				}
 			});
 		},
-		test: function test(data) {
+		createItem: function createItem(data) {
 			alert(data);
 		}
 	}

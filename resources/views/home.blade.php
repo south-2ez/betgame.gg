@@ -277,12 +277,12 @@
         <div>
             <div class="col-md-7">
                 <div class="row margin-bottom-20">
-                    <button id="loadAll" type="button" class="btn btn-info btn-all-matches categorybtn" data-pointer="0">All Games</button>
-                    <img id="loadDota" class="icon-game-type img-circle categorybtn" data-pointer="0" src="{{ asset('images/dota-icon.png') }}"/>
-                    <img id="loadCsgo" class="icon-game-type img-circle categorybtn" data-pointer="0" src="{{ asset('images/csgo-icon.png') }}"/>
-                    <img id="loadLol" class="icon-game-type img-circle categorybtn" data-pointer="0" src="{{ asset('images/lol-icon.png') }}"/>
-                    <img id="loadNbaPlayoffs" class="icon-game-type img-circle categorybtn" data-pointer="0" src="{{ asset('images/nba-icon.png') }}"/>
-                    <img id="loadSports" class="icon-game-type img-circle categorybtn" data-pointer="0" src="{{ asset('images/sports-icon.png') }}"/>
+                    <button id="loadAll" type="button" class="all-match-button btn btn-info btn-all-matches categorybtn" data-pointer="0">All Games</button>
+                    <img id="loadDota" class="dota-match-button icon-game-type img-circle categorybtn" data-pointer="0" src="{{ asset('images/dota-icon.png') }}"/>
+                    <img id="loadCsgo" class="csgo-match-button icon-game-type img-circle categorybtn" data-pointer="0" src="{{ asset('images/csgo-icon.png') }}"/>
+                    <img id="loadLol" class="lol-match-button icon-game-type img-circle categorybtn" data-pointer="0" src="{{ asset('images/lol-icon.png') }}"/>
+                    <img id="loadNbaPlayoffs" class="nbaplayoffs-match-button icon-game-type img-circle categorybtn" data-pointer="0" src="{{ asset('images/nba-icon.png') }}"/>
+                    <img id="loadSports" class="sports-match-button icon-game-type img-circle categorybtn" data-pointer="0" src="{{ asset('images/sports-icon.png') }}"/>
 
                     <div class="menu pull-right margin-right-18">
                         <button type="button" class="btn btn-link" id="btn-upcoming">Upcoming</button>
@@ -347,7 +347,7 @@
                     </div>
                 </div>
 
-                <div class="row upcoming-display">
+                <div class="row upcoming-display {{ (count($matches)) == 0 ? 'display-none' : '' }}" id="show-more-container">
                     <div class="col-md-12" id="matchesHolder">
                         <div class="row game-card-more matchmain">
                             <div class="col-md-12 text-center">
@@ -376,12 +376,69 @@
                 @if( !empty(Route::current()) && Route::current()->getName() != 'admin' && Route::current()->getName() != 'agent' && Route::current()->getName() != 'bnd.matches.active' && Route::current()->getName() != 'bnd.match.view' && Route::current()->getName() != 'matchmaker' )
                     @if( Route::current()->getName() == 'match.view')
                         @if(Auth::guest() || (Auth::guest() == false && Auth::user()->type == 'user'))
-                            <recent-matches ref="recentMatches" :matches="{{ json_encode($matches) }}" ></recent-matches>
+                            <recent-matches></recent-matches>
                         @endif
                     @else 
-                        <recent-matches ref="recentMatches" :matches="{{ json_encode($matches) }}"></recent-matches>
+
+                    
+                    <ul class="ul-recent-matches">
+                        <li class="li-recent-matches display-none" id="recent-matches-template">
+                            <div data-v-9b896f18="" class="row">
+                                <div data-v-9b896f18="" class="col-xs-9">
+                                    <div data-v-9b896f18="" class="row">
+                                        <div data-v-9b896f18="" class="col-xs-2">
+                                            <img data-v-9b896f18="" src="/public_image/1622450610.png" class="results-team-logo team-a-img">
+                                        </div>
+                                        <div data-v-9b896f18="" class="col-xs-8 ">
+                                            <span data-v-9b896f18="" class="text-green team-a-name">
+                                                INF
+                                            </span>
+                                        </div>
+                                        <div data-v-9b896f18="" class="col-xs-2 team-a-win-count">2</div>
+                                    </div>
+                                    <div data-v-9b896f18="" class="row">
+                                        <div data-v-9b896f18="" class="col-xs-2">
+                                            <img data-v-9b896f18="" src="/public_image/1622439192.png" class="results-team-logo team-b-img">
+                                        </div>
+                                        <div data-v-9b896f18="" class="col-xs-8">
+                                            <span data-v-9b896f18="" class="text-gray team-b-name">
+                                                simply TOOBASED
+                                            </span>
+                                        </div>
+                                        <div data-v-9b896f18="" class="col-xs-2 team-b-win-count">0</div>
+                                    </div>
+                                </div>
+
+                                
+                                <div data-v-9b896f18="" class="col-xs-3">
+                                    <i class="text-danger cancelled-match display-none" aria-hidden="true">Cancelled</i>
+                                    <i class="draw-match draw-match-d display-none" aria-hidden="true">Draw</i>
+                                    <i class="draw-match draw-match-c display-none" aria-hidden="true">Draw</i>
+                                    <i class="text-danger forfeit-match display-none" aria-hidden="true">Forfeit</i>
+
+                                    <div data-v-9b896f18="" class="row trophy-container">
+                                        <div data-v-9b896f18="" class="col-xs-12 team-a-trophy">
+                                            <i data-v-9b896f18="" aria-hidden="true" title="Winner" class="fa fa-trophy text-primary display-none"></i>
+                                        </div>
+                                    </div>
+                                    <div data-v-9b896f18="" class="row trophy-container">
+                                        <div data-v-9b896f18="" class="col-xs-12 team-a-trophy">
+                                            <i data-v-9b896f18="" aria-hidden="true" title="Winner" class="fa fa-trophy text-primary display-none"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+
+                    
                     @endif
 
+
+
+
+
+                    
                     <user-messages logged-in="{{ Auth::guest() ? 0 : 1 }}"></user-messages>
                     {{-- <chinese-new-year-flip-cards logged-in="{{ Auth::guest() ? 0 : 1 }}"></chinese-new-year-flip-cards> --}}
                     @if(!Auth::guest() && Auth::user()->type == 'user' &&  Auth::user()->credits >= 100)
@@ -394,11 +451,9 @@
             <div class="col-md-5">
                 <div class="row margin-bottom-28">
                     <div class="col-md-12">
-                        <div class="event-container">Events</div>
+                        <div class="event-container">Events ({{ count($leagues) }})</div>
                     </div>
                 </div>
-
-
 
                 <div class="panel-group" id="accordion">
                 @foreach($leagues as $key => $league)
@@ -673,7 +728,7 @@
 <script type="text/javascript">
 $(document).ready(function(){
     $(".all-match-button").click(function(){
-        $(".btnall").attr('style','display: block !important');
+        $(".btnall").attr('style','display: inline !important');
         $(".btndota").attr('style','display: none !important');
         $(".btncsgo").attr('style','display: none !important');
         $(".btnsports").attr('style','display: none !important');
@@ -682,7 +737,7 @@ $(document).ready(function(){
     });
     $(".dota-match-button").click(function(){
         $(".btnall").attr('style','display: none !important');
-        $(".btndota").attr('style','display: block !important');
+        $(".btndota").attr('style','display: inline !important');
         $(".btncsgo").attr('style','display: none !important');
         $(".btnsports").attr('style','display: none !important');
         $(".btnlol").attr('style','display: none !important');
@@ -690,7 +745,7 @@ $(document).ready(function(){
     });
     $(".csgo-match-button").click(function(){
         $(".btnall").attr('style','display: none !important');
-        $(".btncsgo").attr('style','display: block !important');
+        $(".btncsgo").attr('style','display: inline !important');
         $(".btndota").attr('style','display: none !important');
         $(".btnsports").attr('style','display: none !important');
         $(".btnlol").attr('style','display: none !important');
@@ -698,7 +753,7 @@ $(document).ready(function(){
     });
     $(".sports-match-button").click(function(){
         $(".btnall").attr('style','display: none !important');
-        $(".btnsports").attr('style','display: block !important');
+        $(".btnsports").attr('style','display: inline !important');
         $(".btndota").attr('style','display: none !important');
         $(".btncsgo").attr('style','display: none !important');
         $(".btnlol").attr('style','display: none !important');
@@ -709,7 +764,7 @@ $(document).ready(function(){
         $(".btndota").attr('style','display: none !important');
         $(".btncsgo").attr('style','display: none !important');
         $(".btnsports").attr('style','display: none !important');
-        $(".btnlol").attr('style','display: block !important');
+        $(".btnlol").attr('style','display: inline !important');
         $(".btnnbaplayoffs").attr('style','display: none !important');    
     });    
     $(".nbaplayoffs-match-button").click(function(){
@@ -718,7 +773,7 @@ $(document).ready(function(){
         $(".btncsgo").attr('style','display: none !important');
         $(".btnsports").attr('style','display: none !important');
         $(".btnlol").attr('style','display: none !important');
-        $(".btnnbaplayoffs").attr('style','display: block !important');    
+        $(".btnnbaplayoffs").attr('style','display: inline !important');    
     });
 });
 </script>
@@ -868,7 +923,7 @@ $(document).ready(function(){
             var container = $("#matches").html();
             var container2 = $("#nomatch").html();
             var url = "";
-            let recent_match_visibility = !$("#topbets").is(":hidden");
+            let recent_match_visibility = !$(".result-display").is(":hidden");
 
             if(!recent_match_visibility) {
                 switch(categ){
@@ -891,20 +946,28 @@ $(document).ready(function(){
                     case 'loadLol':
                         $("#loadLolMore").data('pointer',0);
                         url = "{{url('/match/lol')}}/" + $btn.data('pointer')
-                        break;      
+                        break;
                     case 'loadNbaPlayoffs':
                         $("#loadNbaPlayoffsMore").data('pointer',0);
                         url = "{{url('/match/nbaplayoffs')}}/" + $btn.data('pointer')
                         break;
-                    break;                           
+                    break;
                 }
+
                 $.get(url)
                 .done(function(data) {
                     $btn.button('reset');
                     $new_contents = '';
+
+                    if(data.matches.length > 0) {
+                        $("#show-more-container").removeClass("display-none");
+                    } else {
+                        $("#show-more-container").addClass("display-none");
+                    }
+
                     $.each(data.matches, function() {
                         var match = this;
-                        
+
                         switch(this.status){
                             case 'open':
                                 match.open = true;
@@ -950,7 +1013,94 @@ $(document).ready(function(){
                     }
                 });
             } else {
-                //app.getRecentMatches(categ);
+                $("body").find(".removable-recent-matches").remove();
+
+                let type = 'all';
+
+                switch(categ){
+                    case 'loadAll':
+                        type = 'all';
+                        break;
+                    case 'loadDota':
+                        type = 'dota2';
+                        break;
+                    case 'loadCsgo':
+                        type = 'csgo';
+                        break;
+                    case 'loadSports':
+                        type = 'sports';
+                        break;
+                    case 'loadLol':
+                        type = 'lol';
+                        break;
+                    case 'loadNbaPlayoffs':
+                        type = 'nbaplayoffs';
+                        break;
+                    break;
+                }
+
+                $.ajax({
+                    url: '/listrecentmatches',
+                    type: 'GET',
+                    data: { type: type },
+                    success: function(data) {
+                        $btn.button('reset');
+                        //$('.recent-box').show();
+                        let dataAppend = "";
+
+                        if(data.length > 0) {
+                            data.forEach((datum) => {
+                                let cloned = $('#recent-matches-template').clone();
+                                cloned.removeClass('display-none');
+
+                                cloned.removeAttr("id");
+                                cloned.addClass("removable-recent-matches");
+
+                                cloned.find(".team-a-img").attr("src", datum.team_a.image);
+                                cloned.find(".team-a-name").text(datum.team_a.name);
+                                cloned.find(".team-a-win-count").text(datum.teama_score);
+
+                                cloned.find(".team-b-img").attr("src", datum.team_b.image);
+                                cloned.find(".team-b-name").text(datum.team_b.name);
+                                cloned.find(".team-b-win-count").text(datum.teamb_score);
+
+                                if(datum.status == 'settled' && datum.team_winner == datum.team_a.id) {
+                                    cloned.find('.team-a-trophy').removeClass('display-none');
+                                }
+
+                                if(datum.status == 'settled' && datum.team_winner == datum.team_a.id) {
+                                    cloned.find('.team-b-trophy').removeClass('display-none');
+                                }
+
+                                if(datum.status == 'cancelled') {
+                                    cloned.find(".cancelled-match").removeClass('display-none');
+                                }
+
+                                if(datum.status == 'draw') {
+                                    cloned.find(".draw-match-d").removeClass('display-none');
+                                }
+
+                                if(!!datum.team_c && datum.team_winner == datum.team_c.id) {
+                                    cloned.find(".draw-match-d=c").removeClass('display-none');
+                                }
+
+                                if(datum.status == 'forfeit') {
+                                    cloned.find(".forfeit-match").removeClass('display-none');
+                                }
+
+                                dataAppend += cloned;
+
+                                $(".ul-recent-matches").append(cloned)
+                            });
+                        }
+
+                    //console.log('ddd', data)
+                    //self.recent_matches = data;
+                    },
+                    error: function(error) {
+                        console.log('errr', error)
+                    }
+                });
             }
          });
 
@@ -996,16 +1146,15 @@ $(document).ready(function(){
 
 
         $("#btn-upcoming").click(function() {
-            //app.selected_tab = 'upcoming';
             $(".upcoming-display").show();
             $(".result-display").hide();
         });
 
         $("#btn-result").click(function() {
-            //app.selected_tab = 'result';
             $(".result-display").show();
             $(".upcoming-display").hide();
             
+            $('.categorybtn').click();
         });
 
     });

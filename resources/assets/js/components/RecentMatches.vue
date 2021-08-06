@@ -203,15 +203,13 @@
 <script>
 	export default {
 		name: 'RecentMatches',
-		props: ['matches'],
+		props: [],
 		data: function() {
 			return {
 				recent_matches: []
 			};
 		},
 		mounted() {
-			console.log(this.message);
-			console.log('asdf', this.matches)
 			$('.all-match-btn').trigger('click');
 		},
 		watch: {
@@ -240,7 +238,7 @@
 					}
 				});
 			},
-			test(data) {
+			createItem(data) {
 				alert(data);
 			}
 		}

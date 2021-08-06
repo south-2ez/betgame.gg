@@ -328,8 +328,33 @@ body {
 
 .result-display {
     display: none;
+    margin-right: 15px;
 }
 
 .recent-matches-content {
     width: 100% !important;
+}
+
+.li-recent-matches {
+    background: #1e1d2b;
+    padding: 15px;
+}
+
+.ul-recent-matches {
+    list-style-type: none;
+    padding-left: 0px;
+}
+
+.li-recent-matches:nth-child(2) {
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+}
+
+.li-recent-matches:last-child {
+    border-bottom-left-radius: 5px;
+    border-bottom-right-radius: 5px;
+}
+
+.display-none {
+    display: none;
 }
