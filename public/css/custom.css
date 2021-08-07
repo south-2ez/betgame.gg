@@ -338,6 +338,8 @@ body {
 .li-recent-matches {
     background: #1e1d2b;
     padding: 15px;
+    border-bottom: 1px solid;
+    border-image: linear-gradient(45deg,#16373D,#000000) 10;
 }
 
 .ul-recent-matches {
