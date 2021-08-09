@@ -276,7 +276,7 @@
     <div class="container app-container">
         <div>
             <div class="col-md-7">
-                <div class="row margin-bottom-20">
+                <div class="row margin-bottom-20 type-container">
                     <button id="loadAll" type="button" class="all-match-button btn btn-info btn-all-matches categorybtn" data-pointer="0">All Games</button>
                     <img id="loadDota" class="dota-match-button icon-game-type img-circle categorybtn" data-pointer="0" src="{{ asset('images/dota-icon.png') }}"/>
                     <img id="loadCsgo" class="csgo-match-button icon-game-type img-circle categorybtn" data-pointer="0" src="{{ asset('images/csgo-icon.png') }}"/>
@@ -284,7 +284,7 @@
                     <img id="loadNbaPlayoffs" class="nbaplayoffs-match-button icon-game-type img-circle categorybtn" data-pointer="0" src="{{ asset('images/nba-icon.png') }}"/>
                     <img id="loadSports" class="sports-match-button icon-game-type img-circle categorybtn" data-pointer="0" src="{{ asset('images/sports-icon.png') }}"/>
 
-                    <div class="menu pull-right margin-right-18">
+                    <div class="menu pull-right margin-right-18 ur-mobile">
                         <button type="button" class="btn btn-link" id="btn-upcoming">Upcoming</button>
                         <span class="span-divider">|</span>
                         <button type="button" class="btn btn-link" id="btn-result">Results</button>
@@ -296,7 +296,7 @@
                     @foreach($matches as $index => $match)
                         <a href="{{ url('/') . '/match/' . $match->id }}">
                             <div class="row game-card matchmain">
-                                <div class="col-md-4 game-card-img" style="background-image: url({{ url('/images') . '/' . $match->league->image }});">
+                                <div class="col-md-4 col-xs-12 game-card-img hide-mobile" style="background-image: url({{ url('/images') . '/' . $match->league->image }});">
                                     <span class="game-card-time">
                                     @if($match->status == 'ongoing')
                                         <img class="" src="{{ asset('images/live.png') }}"/>
@@ -309,13 +309,13 @@
                                     @endif
                                     </span>
                                 </div>
-                                <div class="col-md-8 game-card-padding">
+                                <div class="col-md-8 col-xs-12 game-card-padding">
                                     <div class="row text-center game-card-title-container">
                                         <span class="game-card-title align-baseline">{{ !!$match->label ? $match->label : '' }}</span>
                                     </div>
 
                                     <div class="row text-center">
-                                        <div class="col-md-4">
+                                        <div class="col-md-4 col-xs-4">
                                             <div>
                                                 <img class="match-team-logo" src="{{ $match->teamA->image }}" />
                                             </div>
@@ -326,8 +326,8 @@
                                                 {{ $match->teama_percentage }}%
                                             </div>
                                         </div>
-                                        <div class="col-md-4"><div class="match-type">{{$match->best_of}}</div></div>
-                                        <div class="col-md-4">
+                                        <div class="col-md-4 col-xs-4"><div class="match-type">{{$match->best_of}}</div></div>
+                                        <div class="col-md-4 col-xs-4">
                                             <div>
                                                 <img class="match-team-logo" src="{{ $match->teamB->image }}" />
                                             </div>
@@ -339,9 +339,24 @@
                                             </div>
                                         </div>
                                     </div>
-
                                 </div>
                             </div>
+
+                            <div class="col-md-4 col-xs-12 game-card-img" style="background-image: url({{ url('/images') . '/' . $match->league->image }});">
+                                    <span class="game-card-time">
+                                    @if($match->status == 'ongoing')
+                                        <img class="" src="{{ asset('images/live.png') }}"/>
+                                    @elseif($match->status == 'settled')
+                                        {{$match->schedule->diffForHumans()}} <span style="color: #606060; font-weight: bold; font-size: 16px">&nbsp;SETTLED</span>
+                                    @elseif($match->status == 'draw')
+                                        {{$match->schedule->diffForHumans()}} <span style="color: #606060; font-weight: bold; font-size: 16px">&nbsp;DRAW - CREDITS RETURNED</span>
+                                    @else
+                                    <span class="match_countdown" data-schedule="{{$match->schedule}}">{{$match->schedule->diffForHumans()}}</span>
+                                    @endif
+                                    </span>
+                                </div>
+
+
                         </a>
                     @endforeach
                     </div>
@@ -380,7 +395,6 @@
                         @endif
                     @else 
 
-                    
                     <ul class="ul-recent-matches">
                         <li class="li-recent-matches display-none" id="recent-matches-template">
                             <div data-v-9b896f18="" class="row">
@@ -448,7 +462,7 @@
                 </div>
             </div>
 
-            <div class="col-md-5">
+            <div class="col-md-5 events-mobile">
                 <div class="row margin-bottom-28">
                     <div class="col-md-12">
                         <div class="event-container">Events ({{ count($leagues) }})</div>

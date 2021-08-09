@@ -598,6 +598,10 @@
     }
 }
 @media screen and (max-width: 630px) {
+    .ur-mobile{
+        background-color: red;
+    }
+
     .match-team-logo {
         width: 50px;
         height: 50px;
@@ -618,8 +622,8 @@
         padding: 0;
     }
     /*    .header{margin-bottom:20px;}*/
-    .title {
-    }
+    /* .title {
+    } */
     .menu li a img {
         margin: 5px;
     }
@@ -656,6 +660,12 @@
     }
 }
 @media screen and (max-width: 480px) {
+    .ur-mobile{
+        background-color: inherit;
+        margin-right: unset !important;
+        text-align: center !important;
+    }
+
     .m-container1 {
         width: 98%;
     }
@@ -948,6 +958,13 @@
 }
 /** largest mobile width **/
 @media screen and (min-width: 426px) {
+    
+    .ur-mobile{
+        background-color: inherit;
+        margin-right: unset !important;
+        text-align: center !important;
+    }
+
     .hide-desktop {
         display: none !important;
     }
@@ -959,6 +976,36 @@
 
 /** largest mobile width **/
 @media screen and (max-width: 425px) {
+    .events-mobile {
+        padding: 0px;
+    }
+
+    .game-card-img {
+        height: 61px !important;
+        margin-left: -15px;
+        border-bottom: 1px solid;
+        border-image : linear-gradient(45deg,#16373D,#000000) 10;
+        
+    }
+
+    .type-container {
+        text-align: center;
+    }
+
+    .upcoming-display {
+        margin-right: -50px;
+    }
+
+    .game-card-title-container {
+        margin-top: 20px;
+    }
+
+    .ur-mobile{
+        background-color: inherit;
+        margin-right: unset !important;
+        text-align: center !important;
+    }
+
     .hide-mobile {
         display: none !important;
     }
@@ -1104,3 +1151,4 @@
     color: black;
     width: 100%;
 }
+
