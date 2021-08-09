@@ -976,6 +976,11 @@
 
 /** largest mobile width **/
 @media screen and (max-width: 425px) {
+    .game-card {
+        border-bottom: unset !important;
+        border-image: unset !important;
+    }
+
     .events-mobile {
         padding: 0px;
     }

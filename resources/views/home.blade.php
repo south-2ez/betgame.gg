@@ -296,7 +296,7 @@
                     @foreach($matches as $index => $match)
                         <a href="{{ url('/') . '/match/' . $match->id }}">
                             <div class="row game-card matchmain">
-                                <div class="col-md-4 col-xs-12 game-card-img hide-mobile" style="background-image: url({{ url('/images') . '/' . $match->league->image }});">
+                                <div class="col-md-4 col-xs-12 game-card-img hide-mobile" style="background: linear-gradient(to right, rgba(255,255,255,0) 5%, rgb(30 29 43)), url({{ url('/images') . '/' . $match->league->image }});background-size: cover;">
                                     <span class="game-card-time">
                                     @if($match->status == 'ongoing')
                                         <img class="" src="{{ asset('images/live.png') }}"/>
@@ -342,21 +342,19 @@
                                 </div>
                             </div>
 
-                            <div class="col-md-4 col-xs-12 game-card-img" style="background-image: url({{ url('/images') . '/' . $match->league->image }});">
-                                    <span class="game-card-time">
-                                    @if($match->status == 'ongoing')
-                                        <img class="" src="{{ asset('images/live.png') }}"/>
-                                    @elseif($match->status == 'settled')
-                                        {{$match->schedule->diffForHumans()}} <span style="color: #606060; font-weight: bold; font-size: 16px">&nbsp;SETTLED</span>
-                                    @elseif($match->status == 'draw')
-                                        {{$match->schedule->diffForHumans()}} <span style="color: #606060; font-weight: bold; font-size: 16px">&nbsp;DRAW - CREDITS RETURNED</span>
-                                    @else
-                                    <span class="match_countdown" data-schedule="{{$match->schedule}}">{{$match->schedule->diffForHumans()}}</span>
-                                    @endif
-                                    </span>
-                                </div>
-
-
+                            <div class="col-md-4 col-xs-12 game-card-img hide-desktop" style="background-image: url({{ url('/images') . '/' . $match->league->image }});">
+                                <span class="game-card-time">
+                                @if($match->status == 'ongoing')
+                                    <img class="" src="{{ asset('images/live.png') }}"/>
+                                @elseif($match->status == 'settled')
+                                    {{$match->schedule->diffForHumans()}} <span style="color: #606060; font-weight: bold; font-size: 16px">&nbsp;SETTLED</span>
+                                @elseif($match->status == 'draw')
+                                    {{$match->schedule->diffForHumans()}} <span style="color: #606060; font-weight: bold; font-size: 16px">&nbsp;DRAW - CREDITS RETURNED</span>
+                                @else
+                                <span class="match_countdown" data-schedule="{{$match->schedule}}">{{$match->schedule->diffForHumans()}}</span>
+                                @endif
+                                </span>
+                            </div>
                         </a>
                     @endforeach
                     </div>
@@ -445,13 +443,7 @@
                         </li>
                     </ul>
 
-                    
                     @endif
-
-
-
-
-
                     
                     <user-messages logged-in="{{ Auth::guest() ? 0 : 1 }}"></user-messages>
                     {{-- <chinese-new-year-flip-cards logged-in="{{ Auth::guest() ? 0 : 1 }}"></chinese-new-year-flip-cards> --}}
@@ -665,7 +657,7 @@
 <script id="matches" type="text/template">
     <a href="{{url('/')}}/match/@{{id}}">
         <div class="row game-card matchmain">
-            <div class="col-md-4 game-card-img" style="background-image: url({{url('/images')}}/@{{league.image}});">
+            <div class="col-md-4 col-xs-12 game-card-img hide-mobile" style="background-image: linear-gradient(to right, rgba(255,255,255,0) 5%, rgb(30 29 43)), url({{url('/images')}}/@{{league.image}});">
                 <span class="game-card-time">
                 @{{#ongoing}}
                     <img class="" src="{{ asset('images/live.png') }}"/>
@@ -675,13 +667,13 @@
                 @{{/open}}
                 </span>
             </div>
-            <div class="col-md-8 game-card-padding">
+            <div class="col-md-8 col-xs-12 game-card-padding">
                 <div class="row text-center game-card-title-container">
                     <span class="game-card-title align-baseline">@{{label}}</span>
                 </div>
 
                 <div class="row text-center">
-                    <div class="col-md-4">
+                    <div class="col-md-4 col-xs-4">
                         <div>
                             <img class="match-team-logo" src="{{url('/')}}/@{{team_a.image}}" />
                         </div>
@@ -697,8 +689,8 @@
                             @{{teama_percentage}}%
                         </div>
                     </div>
-                    <div class="col-md-4"><div class="match-type">{{$match->best_of}}</div></div>
-                    <div class="col-md-4">
+                    <div class="col-md-4 col-xs-4"><div class="match-type">{{$match->best_of}}</div></div>
+                    <div class="col-md-4 col-xs-4">
                         <div>
                             <img class="match-team-logo" src="{{url('/')}}/@{{team_b.image}}" />
                         </div>
@@ -716,6 +708,16 @@
                     </div>
                 </div>
             </div>
+        </div>
+        <div class="col-md-4 col-xs-12 game-card-img hide-desktop" style="background-image: linear-gradient(to right, rgba(255,255,255,0) 5%, rgb(30 29 43)), url({{url('/images')}}/@{{league.image}});">
+            <span class="game-card-time">
+            @{{#ongoing}}
+                <img class="" src="{{ asset('images/live.png') }}"/>
+            @{{/ongoing}}
+            @{{#open}}
+                <span class="match_countdown" data-schedule="@{{formatted_schedule}}">@{{formatted_schedule}}</span>
+            @{{/open}}
+            </span>
         </div>
     </a>
 </script>
