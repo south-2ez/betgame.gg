@@ -305,7 +305,7 @@
 
     <div id="app">
     <div class="header" id="webtop">
-        <div id="mt"><div onclick="goTo(0)">up <i class="fa fa-arrow-up"></i></div><div onclick="goTo(1)">matches</div></div>
+        <!--<div id="mt"><div onclick="goTo(0)">up <i class="fa fa-arrow-up"></i></div><div onclick="goTo(1)">matches</div></div>-->
         
 
         <div class="container home-container">
@@ -352,12 +352,11 @@
                         </ul>
                     </div>
                         -->
-                    
-                    <div class="menu pull-right">
+
+                    <div class="menu pull-right hide-mobile">
                         <button type="button" class="btn btn-link btn-header">Shop</button>
                         <button type="button" class="btn btn-link btn-header">Support</button>
                         <div class="btn-group">
-                            
                             @if (Auth::guest())
                             <button type="button" class="btn btn-info btn-login"  data-toggle="modal" data-target="#signupm"><span><b>SignIn / SignUp</b></span></button>
                             @else
@@ -371,13 +370,28 @@
                                 {{ csrf_field() }}
                             </form>
                             @endif
-               
                         </div>
-
                     </div>
-                
-                </div>
 
+                    <div class="pull-right hide-desktop">
+                        <a href="javascript:void(0);" class="icon" onclick="openRightMenu()">
+                            <i class="fa fa-bars icon-navbar"></i>
+                        </a>
+                    </div>
+
+                    <div class="w3-sidebar w3-bar-block w3-card w3-animate-right " style="display:none;right:0;" id="rightMenu">
+                        <button onclick="closeRightMenu()" class="btn-close-menu w3-bar-item w3-button w3-large"><i class="fa fa-close"></i></button>
+                        <hr class="sidebar-divider"></hr>
+                        <a href="#" class="w3-bar-item w3-button sidebar-links">Shop</a>
+                        <a href="#" class="w3-bar-item w3-button sidebar-links">Support</a>
+
+                        <div class="sidebar-logins">
+                            <button type="button" class="btn btn-info btn-login-sidebar"  data-toggle="modal" data-target="#signupm"><span><b>SignIn / SignUp</b></span></button>
+                        </div>
+                    </div>
+
+
+                </div>
             </div>
         </div>
 
@@ -386,8 +400,6 @@
         @yield('content')
 
         @if( !empty(Route::current()) && Route::current()->getName() != 'admin' && Route::current()->getName() != 'agent' && Route::current()->getName() != 'bnd.matches.active' && Route::current()->getName() != 'bnd.match.view' && Route::current()->getName() != 'matchmaker' )
-        
-
             @if(1 == 2)
                 @if( Route::current()->getName() == 'match.view')
                     @if(Auth::guest() || (Auth::guest() == false && Auth::user()->type == 'user'))
@@ -799,6 +811,15 @@
                     break;
             }
         }
+
+        function openRightMenu() {
+            document.getElementById("rightMenu").style.display = "block";
+        }
+
+        function closeRightMenu() {
+            document.getElementById("rightMenu").style.display = "none";
+        }
+
     </script>
 
 
