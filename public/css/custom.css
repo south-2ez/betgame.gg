@@ -423,3 +423,116 @@ body {
 .user-details {
     background-color: #2a3233;
 }
+
+.modal-content {
+    background-color: #1E1D2B;
+    border-color    : #414141;
+    padding         : 10px;
+    color           : white;
+}
+
+#signupm .modal-content {
+    width: 400px;
+}
+
+.m-container1 {
+    background-color: #1E1D2B;
+    color: white;
+    border-radius: 5px;
+}
+
+.m-container1 .info-box-content {
+    color: black;
+}
+
+.m-container1 .title2 {
+    background: #818488;
+    color: white;
+    border-top-right-radius: 5px;
+    border-top-left-radius: 5px;
+}
+
+.m-container2{
+    background-color: #1E1D2B;
+    border-radius: 5px;
+}
+
+.m-container2 .title2{
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+}
+
+.m-container2 label {
+    color: white;
+}
+
+.m-container2 select {
+    color: black;
+}
+
+.m-container2 .dataTables_info {
+    color: white !important;
+}
+
+#bets_table_paginate .previous, #bets_table_paginate .next {
+    color: white !important;
+    border-color: white;
+}
+
+.paginate_button {
+    color: white !important;
+    border-color: #6a94b7 !important;
+    background: #337ab7 !important;
+}
+
+.paginate_button.current {
+    color: white !important;
+    border-color: white !important;
+}
+
+.paginate_button.previous {
+    color: white !important;
+    border-color: #6a94b7 !important;
+    background: #337ab7;
+}
+
+.dataTables_info {
+    color: white !important;
+}
+
+.main-ct table tr {
+    background: #717171;
+    color: white;
+}
+
+.main-ct table {
+    background: #717171;
+    color: white;
+    border-radius: 5px !important;
+    overflow: hidden;
+}
+
+.m-container2 .table-striped > tbody > tr:nth-child(2n+1) > td, .table-striped > tbody > tr:nth-child(2n+1) > th {
+    background-color: #1e1d2b;
+}
+
+.m-container2 .table-striped > tbody > tr:nth-child(2n) > td, .table-striped > tbody > tr:nth-child(2n) > th {
+    background-color: #1e1d2bbf;
+}
+
+.m-container2 table {
+    border: 2px solid #1e1d2bbf;
+}
+
+.m-container1 .table-striped > tbody > tr:nth-child(2n+1) > td, .table-striped > tbody > tr:nth-child(2n+1) > th {
+    background-color: #1e1d2b;
+}
+
+.m-container1 .table-striped > tbody > tr:nth-child(2n) > td, .table-striped > tbody > tr:nth-child(2n) > th {
+    background-color: #1e1d2bbf;
+}
+
+.m-container1 table {
+    border: 2px solid #1e1d2bbf;
+}
+
