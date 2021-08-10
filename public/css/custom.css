@@ -368,3 +368,46 @@ body {
     background-repeat: no-repeat;
     background-size: 100% 100%, cover;
 } */
+
+.user_details {
+    background-color: #1e1d2b;
+    padding: 10px;
+    border-radius: 5px;
+}
+
+.user_name{
+    font-size: 15px;
+    line-height: 16px;
+    color: #FFFFFF;
+}
+
+.credits_top {
+    zoom: 1;
+    padding: 1px 4px 2px 4px;
+    font-size: 13px;
+    color: greenyellow;
+    background: #32302b;
+    margin-top: 5px;
+    border-radius: 5px;
+    margin-left: 20px;
+}
+
+.btn-logout {
+    height          : 42px;
+    border-radius   : 5px !important;
+    background-color: #1e1d2b;
+    border-color    : #1e1d2b;
+    color           : white;
+}
+
+.color-red {
+    color: #ec2427;
+}
+
+.events-mobile {
+    padding-right: 0px;
+}
+
+.bg-header-actions{
+    padding-right: 5px;
+}

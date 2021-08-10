@@ -353,7 +353,7 @@
                     </div>
                         -->
 
-                    <div class="menu pull-right hide-mobile">
+                    <div class="menu pull-right hide-mobile bg-header-actions">
                         <button type="button" class="btn btn-link btn-header">Shop</button>
                         <button type="button" class="btn btn-link btn-header">Support</button>
                         <div class="btn-group">
@@ -361,11 +361,12 @@
                             <button type="button" class="btn btn-info btn-login"  data-toggle="modal" data-target="#signupm"><span><b>SignIn / SignUp</b></span></button>
                             @else
                             <span class="user_details">
-                                <span class="user_name">{{ Auth::user()->name }}</span><br/>
-                                <span class="credits_top">EZ Credits: <span data-number>&#8369; {{ number_format(Auth::user()->credits, 2, '.', ',') }}</span></span>
+                                <span class="user_name">{{ Auth::user()->name }}</span>
+                                <span class="credits_top">Credits: <span data-number>&#8369; {{ number_format(Auth::user()->credits, 2, '.', ',') }}</span></span>
                             </span>
-                            <image src="{{ Auth::user()->provider == 'local' ? url('/') . '/' . Auth::user()->avatar : Auth::user()->avatar }}" />
-                            <a href="{{ url('/logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();" class="waves-effect btn grey darken-3" style="padding: 0 16px;margin: 0.75em 0.2em;letter-spacing: 0;"><span>Log</span><b>Out</b></a>
+                            <!-- <image src="{{ Auth::user()->provider == 'local' ? url('/') . '/' . Auth::user()->avatar : Auth::user()->avatar }}" /> -->
+                            <!-- <a href="{{ url('/logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();" class="waves-effect btn grey darken-3" style="padding: 0 16px;margin: 0.75em 0.2em;letter-spacing: 0;"><span>Log</span><b>Out</b></a> -->
+                            <button href="{{ url('/logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();" type="button" class="btn btn-info btn-logout">Logout <i class="fa fa-sign-out color-red"></i></button>
                             <form id="logout-form" action="{{ url('/logout') }}" method="POST" style="display: none;">
                                 {{ csrf_field() }}
                             </form>
@@ -382,11 +383,24 @@
                     <div class="w3-sidebar w3-bar-block w3-card w3-animate-right " style="display:none;right:0;" id="rightMenu">
                         <button onclick="closeRightMenu()" class="btn-close-menu w3-bar-item w3-button w3-large"><i class="fa fa-close"></i></button>
                         <hr class="sidebar-divider"></hr>
+                        @if (!Auth::guest())
+                        <a href="#" class="w3-bar-item w3-button sidebar-links">
+                            {{ Auth::user()->name }}
+                            <span class="credits_top">Credits: <span data-number>&#8369; {{ number_format(Auth::user()->credits, 2, '.', ',') }}</span></span></a>
+                        @endif
+
                         <a href="#" class="w3-bar-item w3-button sidebar-links">Shop</a>
                         <a href="#" class="w3-bar-item w3-button sidebar-links">Support</a>
-
+                        
                         <div class="sidebar-logins">
+                            @if (Auth::guest())
                             <button type="button" class="btn btn-info btn-login-sidebar"  data-toggle="modal" data-target="#signupm"><span><b>SignIn / SignUp</b></span></button>
+                            @else
+                            <button href="{{ url('/logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();" type="button" class="btn btn-info btn-logout btn-logout-mobile">Logout <i class="fa fa-sign-out color-red"></i></button>
+                            <form id="logout-form" action="{{ url('/logout') }}" method="POST" style="display: none;">
+                                {{ csrf_field() }}
+                            </form>
+                            @endif
                         </div>
                     </div>
 

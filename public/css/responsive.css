@@ -1157,3 +1157,7 @@
     width: 100%;
 }
 
+.btn-logout-mobile {
+    width: 100%;
+    border-color: #203d4e;
+}
