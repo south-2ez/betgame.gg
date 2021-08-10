@@ -411,3 +411,15 @@ body {
 .bg-header-actions{
     padding-right: 5px;
 }
+
+.nav-link {
+    color: white;
+}
+
+.margin-top-15 {
+    margin-top: 15px;
+}
+
+.user-details {
+    background-color: #2a3233;
+}

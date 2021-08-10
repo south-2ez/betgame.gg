@@ -149,6 +149,7 @@ class MatchController extends Controller
                 $team_a_bet_amount = !empty($team_a_bet) ? $team_a_bet->amount : 0;
                 $team_b_bet_amount = !empty($team_b_bet) ? $team_b_bet->amount : 0;
                 $team_c_bet_amount = 0;
+                $team_c_bet        = null;
 
                 //if draw betting is enabled
                 if(!empty($match->team_c)){

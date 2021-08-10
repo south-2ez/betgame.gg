@@ -990,7 +990,6 @@
         margin-left: -15px;
         border-bottom: 1px solid;
         border-image : linear-gradient(45deg,#16373D,#000000) 10;
-        
     }
 
     .type-container {
@@ -1084,6 +1083,7 @@
     size: 20px;
     font-size: 30px;
     color: white;
+    margin-top: 15px;
 }
 
 /* .w3-sidebar {
@@ -1159,5 +1159,9 @@
 
 .btn-logout-mobile {
     width: 100%;
-    border-color: #203d4e;
+    border-color: #203d4e !important;
+}
+
+#rightMenu {
+    z-index: 3;
 }
