@@ -314,8 +314,8 @@
                 <div class="col-md-3">
                     <div class='logo'>
                         <a href="/" class="main-logo">
-                            <img src="{{ asset('images/betgame-icon.png') }}"/>
-                            <img src="{{ asset('images/betgame-word.png') }}"/>
+                            <img src="{{ asset('images/betgame-logo.png') }}"/>
+                            <!-- <img src="{{ asset('images/betgame-word.png') }}"/> -->
                         </a>
                         <!--
                         <a href="/" class="main-logo">
