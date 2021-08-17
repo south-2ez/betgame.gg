@@ -631,7 +631,7 @@
                             @{{teama_percentage}}%
                         </div>
                     </div>
-                    <div class="col-md-4"><div class="match-type">{{$match->best_of}}</div></div>
+                    <div class="col-md-4"><div class="match-type">@{{best_of}}</div></div>
                     <div class="col-md-4">
                         <div>
                             <img class="match-team-logo" src="{{url('/')}}/@{{team_b.image}}" />
@@ -689,7 +689,7 @@
                             @{{teama_percentage}}%
                         </div>
                     </div>
-                    <div class="col-md-4 col-xs-4"><div class="match-type">{{$match->best_of}}</div></div>
+                    <div class="col-md-4 col-xs-4"><div class="match-type">@{{#best_of}}</div></div>
                     <div class="col-md-4 col-xs-4">
                         <div>
                             <img class="match-team-logo" src="{{url('/')}}/@{{team_b.image}}" />
