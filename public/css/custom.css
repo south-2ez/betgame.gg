@@ -536,3 +536,14 @@ body {
     border: 2px solid #1e1d2bbf;
 }
 
+.no-match{
+    text-align: center !important;
+    display: grid;
+    font-size: 20px;
+}
+
+.no-events {
+    text-align: center;
+    padding   : 50px;
+    font-size : 20px;
+}

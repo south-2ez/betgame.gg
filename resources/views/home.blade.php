@@ -293,7 +293,12 @@
 
                 <div class="row upcoming-display">
                     <div class="col-md-12" id="matchesHolder">
-                    @foreach($matches as $index => $match)
+                    @if(count($matches) == 0)
+                    <div class="row game-card matchmain no-match">
+                        <label> No Upcoming Matches</label>
+                    </div>
+                    @else
+                        @foreach($matches as $index => $match)
                         <a href="{{ url('/') . '/match/' . $match->id }}">
                             <div class="row game-card matchmain">
                                 <div class="col-md-4 col-xs-12 game-card-img hide-mobile" style="background: linear-gradient(to right, rgba(255,255,255,0) 5%, rgb(30 29 43)), url({{ url('/images') . '/' . $match->league->image }});background-size: cover;">
@@ -356,7 +361,8 @@
                                 </span>
                             </div>
                         </a>
-                    @endforeach
+                        @endforeach
+                    @endif
                     </div>
                 </div>
 
@@ -462,7 +468,12 @@
                 </div>
 
                 <div class="panel-group" id="accordion">
-                @foreach($leagues as $key => $league)
+                @if(count($leagues) == 0)
+                    <div class="panel panel-default event-panel no-events">
+                        Events not found
+                    </div>
+                @else
+                    @foreach($leagues as $key => $league)
                     <div class="panel panel-default event-panel">
                         <div class="panel-heading event-panel-heading">
                             <div class="row">
@@ -521,7 +532,8 @@
                             </div>
                         </div>
                     </div>
-                @endforeach
+                    @endforeach
+                @endif
                 </div>
 
 
@@ -919,6 +931,7 @@ $(document).ready(function(){
                     $new_contents += Mustache.render(container, this);
                 });
 
+                $(".no-match").hide();
 
                 if($btn.data('pointer') == 0){
                     $('.nomatches').attr('style','display: none !important');
