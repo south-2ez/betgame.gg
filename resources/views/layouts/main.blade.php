@@ -354,21 +354,25 @@
                         -->
 
                     <div class="menu pull-right hide-mobile bg-header-actions">
-                        <button type="button" class="btn btn-link btn-header"><a href="{{ url('home') }}" class="nav-link"><i class="fa fa-trophy" aria-hidden="true"></i> Matches</a></button>
+                        <button type="button" class="btn btn-link btn-header"><a href="{{ url('home') }}" class="nav-link"> Matches</a></button>
                         @if (!Auth::guest())
-                        <button type="button" class="btn btn-link btn-header"><a href="{{ url('/profile') }}" class="nav-link"><i class="fa fa-user" aria-hidden="true"></i><span> My Profile</span></a></button>
+                        <button type="button" class="btn btn-link btn-header"><a href="{{ url('/profile') }}" class="nav-link"><span> My Profile</span></a></button>
                         @endif
 
                         @if (!Auth::guest() && Auth::user()->isAdmin())
-                        <button type="button" class="btn btn-link btn-header"><a href="{{ url('/matchmanager') }}" class="nav-link"><i class="fa fa-bolt" aria-hidden="true"></i><span> Match Manager</span></a></button>
-                        <button type="button" class="btn btn-link btn-header"><a href="{{ url('/admin') }}" class="nav-link"><i class="fa fa-cogs" aria-hidden="true"></i><span> Admin</span></a></button>
+                        <button type="button" class="btn btn-link btn-header"><a href="{{ url('/matchmanager') }}" class="nav-link"><span> Match Manager</span></a></button>
+                        <button type="button" class="btn btn-link btn-header"><a href="{{ url('/admin') }}" class="nav-link"><span> Admin</span></a></button>
                         @else
                             @if (!Auth::guest() && Auth::user()->isMatchManager())
-                            <button type="button" class="btn btn-link btn-header"><a href="{{ url('/matchmanager') }}" class="nav-link"><i class="fa fa-bolt" aria-hidden="true"></i><span> Match Manager</span></a></button>
+                            <button type="button" class="btn btn-link btn-header"><a href="{{ url('/matchmanager') }}" class="nav-link"><span> Match Manager</span></a></button>
                             @endif
                         @endif
 
-                        <button type="button" class="btn btn-link btn-header"><a href="{{ url('/market') }}" class="nav-link"><i class="fa fa-shopping-cart" aria-hidden="true"></i><span> Shop</span></a></button>
+                        @if (!Auth::guest() && hasPartnerDashboardAccess( Auth::user()) )
+                        <button type="button" class="btn btn-link btn-header"><a href="{{ url('/agent') }}" class="nav-link"><span> Partner Dashboard</span></a></button>
+                        @endif
+
+                        <button type="button" class="btn btn-link btn-header"><a href="{{ url('/market') }}" class="nav-link"><span> Shop</span></a></button>
                         <!-- <button type="button" class="btn btn-link btn-header">Support</button> -->
                         <div class="btn-group">
                             @if (Auth::guest())
@@ -398,28 +402,32 @@
                         <button onclick="closeRightMenu()" class="btn-close-menu w3-bar-item w3-button w3-large"><i class="fa fa-close"></i></button>
                         <hr class="sidebar-divider"></hr>
 
-                        <a href="{{ url('home') }}" class="w3-bar-item w3-button sidebar-links"><i class="fa fa-trophy" aria-hidden="true"></i> Matches</a>
+                        <a href="{{ url('home') }}" class="w3-bar-item w3-button sidebar-links"> Matches</a>
 
                         @if (!Auth::guest())
-                        <a href="{{ url('/profile') }}" class="w3-bar-item w3-button sidebar-links"><i class="fa fa-user" aria-hidden="true"></i><span> My Profile</span></a>
+                        <a href="{{ url('/profile') }}" class="w3-bar-item w3-button sidebar-links"><span> My Profile</span></a>
                         @endif
 
                         @if (!Auth::guest() && Auth::user()->isAdmin())
-                        <a href="{{ url('/matchmanager') }}" class="w3-bar-item w3-button sidebar-links"><i class="fa fa-bolt" aria-hidden="true"></i><span> Match Manager</span></a>
-                        <a href="{{ url('/admin') }}" class="w3-bar-item w3-button sidebar-links"><i class="fa fa-cogs" aria-hidden="true"></i><span> Admin</span></a>
+                        <a href="{{ url('/matchmanager') }}" class="w3-bar-item w3-button sidebar-links"><span> Match Manager</span></a>
+                        <a href="{{ url('/admin') }}" class="w3-bar-item w3-button sidebar-links"><span> Admin</span></a>
                         @else
                             @if (!Auth::guest() && Auth::user()->isMatchManager())
-                        <a href="{{ url('/matchmanager') }}"" class="w3-bar-item w3-button sidebar-links"><i class="fa fa-bolt" aria-hidden="true"></i><span> Match Manager</span></a>
+                        <a href="{{ url('/matchmanager') }}"" class="w3-bar-item w3-button sidebar-links"><span> Match Manager</span></a>
                             @endif
                         @endif
 
-                        <a href="{{ url('/market') }}" class="w3-bar-item w3-button sidebar-links"><i class="fa fa-shopping-cart" aria-hidden="true"></i><span> Shop</span></a>
+                        @if (!Auth::guest() && hasPartnerDashboardAccess( Auth::user()) )
+                        <a href="{{ url('/agent') }}" class="w3-bar-item w3-button sidebar-links"></i><span> Partner Dashboard</span></a>
+                        @endif
+
+                        <a href="{{ url('/market') }}" class="w3-bar-item w3-button sidebar-links"><span> Shop</span></a>
                         <!-- <a href="#" class="w3-bar-item w3-button sidebar-links">Support</a> -->
                         <div class="sidebar-logins">
                             @if (!Auth::guest())
                             <div>
                                 <a href="#" class="w3-bar-item w3-button sidebar-links user-details">
-                                <i class="fa fa-user" aria-hidden="true"></i> {{ Auth::user()->name }}
+                                    <i class="fa fa-user" aria-hidden="true"></i> {{ Auth::user()->name }}
                                 </a>
                                 <a href="#" class="w3-bar-item w3-button sidebar-links user-details">
                                     <i class="fa fa-money"></i> {{ number_format(Auth::user()->credits, 2, '.', ',') }}
