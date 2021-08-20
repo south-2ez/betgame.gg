@@ -701,8 +701,8 @@ class MatchManagerController extends Controller
             $team->type = $request->type;
             if ($request->image) {
                 $image_file = time() . '.' . $request->image->getClientOriginalExtension();
-                $request->image->move(storage_path('uploads'), $image_file);
-                $team->image = 'public_image/' . $image_file;
+                $request->image->move(storage_path('app/public'), $image_file);
+                $team->image = 'storage/' . $image_file;
             }
             $team->save();
             return ['success' => true, 'team' => $team];

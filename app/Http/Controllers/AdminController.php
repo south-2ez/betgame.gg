@@ -508,7 +508,7 @@ class AdminController extends Controller
             $input = $request->all();
             if ($request->image) {
                 $input['image'] = time() . '.' . $request->image->getClientOriginalExtension();
-                $request->image->move(storage_path('uploads'), $input['image']);
+                $request->image->move(storage_path('app/public'), $input['image']);
             }
 
             if($request->badge_id) {

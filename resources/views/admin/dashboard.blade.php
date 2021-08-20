@@ -4024,7 +4024,7 @@
                         data:'name',
                         name:'name',
                         render: function(data,type,row){
-                            var image_url = "{{url('/public_image')}}/" + row['image'];
+                            var image_url = "{{url('/storage')}}/" + row['image'];
                             return data + '<br/><image src="'+ image_url +'" width="60px" />';
                         }
                     },
