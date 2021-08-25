@@ -735,11 +735,11 @@ class MatchManagerController extends Controller
             $input = $request->all();
             if ($request->image) {
                 $input['image'] = time() . '.' . $request->image->getClientOriginalExtension();
-                $request->image->move(storage_path('uploads'), $input['image']);
+                $request->image->move(storage_path('app/public'), $input['image']);
             }
             if ($request->bottom_image) {
                 $input['bottom_image'] = time() . '.' . $request->bottom_image->getClientOriginalExtension();
-                $request->bottom_image->move(storage_path('uploads'), $input['bottom_image']);
+                $request->bottom_image->move(storage_path('app/public'), $input['bottom_image']);
             }
 
             if ($request->league_id) {
@@ -759,7 +759,7 @@ class MatchManagerController extends Controller
                     if ($request->image)
                         $league->image = $input['image'];
                     if ($request->bottom_image)
-                        $league->bottom_image = 'public_image/' . $input['bottom_image'];
+                        $league->bottom_image = 'storage/' . $input['bottom_image'];
                     $league->save();
                     $league->teams()->sync($request->teams);
                     
@@ -792,7 +792,7 @@ class MatchManagerController extends Controller
                             'league_winner' => 0
                 ]);
                 if ($request->bottom_image)
-                    $league->bottom_image = 'public_image/' . $input['bottom_image'];
+                    $league->bottom_image = 'storage/' . $input['bottom_image'];
                 $league->status = $request->status;
                 $league->betting_status = $request->betting_status;
                 $league->favorites_minimum = $request->favorites_minimum;

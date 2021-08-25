@@ -301,7 +301,7 @@
                         @foreach($matches as $index => $match)
                         <a href="{{ url('/') . '/match/' . $match->id }}">
                             <div class="row game-card matchmain">
-                                <div class="col-md-4 col-xs-12 game-card-img hide-mobile" style="background: linear-gradient(to right, rgba(255,255,255,0) 5%, rgb(30 29 43)), url({{ url('/images') . '/' . $match->league->image }});background-size: cover;">
+                                <div class="col-md-4 col-xs-12 game-card-img hide-mobile" style="background: linear-gradient(to right, rgba(255,255,255,0) 5%, rgb(30 29 43)), url({{ url('/storage') . '/' . $match->league->image }});background-size: cover;">
                                     <span class="game-card-time">
                                     @if($match->status == 'ongoing')
                                         <img class="" src="{{ asset('images/live.png') }}"/>
